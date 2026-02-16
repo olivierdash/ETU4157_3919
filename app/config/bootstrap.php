@@ -1,4 +1,5 @@
 <?php
+define('BASE_URL', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'));
 
 /*
  * This is the file called bootstrap who's job is to make sure that all the
