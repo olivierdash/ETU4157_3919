@@ -35,8 +35,8 @@ if (Debugger::$showBar === true && php_sapi_name() !== 'cli') {
  *           Database Service Setup           *
  **********************************************/
 // PostgreSQL Configuration
-$dsn = 'pgsql:host=' . $config['database']['host'] 
-     . ';port=' . ($config['database']['port'] ?? 5432) 
+$dsn = 'mysql:host=' . $config['database']['host'] 
+     . ';port=' . ($config['database']['port'] ?? 3306) 
      . ';dbname=' . $config['database']['dbname'];
 
 // PDO Options - Important for proper connection handling
