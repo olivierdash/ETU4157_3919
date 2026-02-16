@@ -106,7 +106,6 @@
                     <article class="city-card">
                         <div class="card-header">
                             <h2><?= $row['nom_ville']; ?></h2>
-                            <span class="city-id">ID: <?= $row['id_ville'] ?? 'N/A'; ?></span>
                         </div>
 
                         <div class="card-body">
