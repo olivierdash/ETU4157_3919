@@ -42,9 +42,10 @@ class Ville extends Entity
             $key = $row['ville_id'];
             if(! isset($result[$key])) {
                 $result[$key]['besoins'] = [];
-                $result['ville_id'] = $key;
+                $result[$key]['ville_id'] = $key;
+                $result[$key]['nom_ville'] = $row['nom_ville'];
             }
-            $result[$key]['besoins'] = $row;
+            $result[$key]['besoins'][] = $row;
         }
         return $result;
     }

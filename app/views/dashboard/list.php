@@ -19,7 +19,7 @@
             <?php foreach($ressource_lib as $row): ?>
                 <article class="city-card">
                 <div class="card-header">
-                    <h2><?= $row['ville_id']; ?></h2>
+                    <h2><?= $row['nom_ville']; ?></h2>
                     <span class="city-id">ID: 2</span>
                 </div>
 
