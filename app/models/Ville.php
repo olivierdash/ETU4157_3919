@@ -34,6 +34,10 @@ class Ville extends Entity
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getCountVille(){
+        return count($this->getAll());
+    }
+
     public function getAllWithRessourcesLib(): array{
         $r = new Ressource();
         $ret = $r->getRessourceLib();
@@ -44,8 +48,12 @@ class Ville extends Entity
                 $result[$key]['besoins'] = [];
                 $result[$key]['ville_id'] = $key;
                 $result[$key]['nom_ville'] = $row['nom_ville'];
+                $result[$key]['dons'] = 0;
             }
             $result[$key]['besoins'][] = $row;
+            if($row['quantite'] !== null) {
+                $result[$key]['dons'] += $row['quantite'];
+            }
         }
         return $result;
     }

@@ -28,10 +28,11 @@ CREATE TABLE dons(
 );
 
 CREATE OR REPLACE view v_ressources_lib as 
-SELECT v.nom as 'nom_ville', r.nom, r.ville_id, t.nom as 'type_ressource', r.prixUnitaire
+SELECT v.nom as 'nom_ville', r.nom, r.ville_id, t.nom as 'type_ressource', r.prixUnitaire, d.quantite, d.date_don
 FROM ressources r
 JOIN type t ON r.type_id = t.id
-JOIN ville v ON v.id = r.ville_id;
+JOIN ville v ON v.id = r.ville_id
+JOIN dons d ON d.id_ressource = r.id;
 
 INSERT INTO type (nom) VALUES 
 ('nature'),
