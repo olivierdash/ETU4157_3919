@@ -145,8 +145,8 @@
                             <ul class="donation-list">
                                 <li>
                                     <div class="donation-info">
-                                        <span class="qty"><?= $row['dons'] ?> unités</span>
-                                        <span class="date">Reçu le: 05/03/2024</span>
+                                        <span class="qty"><?= $row['dons']; ?> <?= $row['besoins'][0]['nom']; ?></span>
+                                        <span class="date">Reçu le: <?= $row['besoins'][0]['date_don'] ?></span>
                                     </div>
                                 </li>
                             </ul>
