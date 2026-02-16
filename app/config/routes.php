@@ -1,10 +1,9 @@
 <?php
 // routes.php
-use app\controllers\ProductController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
-
+use app\controllers\VilleController;
 /** 
  * @var Router $router 
  * @var Engine $app
@@ -14,7 +13,8 @@ use flight\net\Router;
 $router->group('', function(Router $router) use ($app) {
     
     $router->get('/', function() use ($app) {
-        $app->render('dashboard/list');
+        $lstVille = VilleController::getAll();
+        $app->render('dashboard/list', ['villes' => $lstVille]);
     });    
 
 }, [SecurityHeadersMiddleware::class]);

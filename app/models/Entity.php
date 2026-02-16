@@ -1,5 +1,5 @@
 <?php
-
+    namespace app\models;
 use Flight;
 
 class Entity{

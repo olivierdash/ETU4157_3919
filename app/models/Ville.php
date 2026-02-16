@@ -12,7 +12,6 @@ class Ville extends Entity{
         $t = $data['id'] ?? null;
         $this->setId($t);
         $this->nom  = $data['nom'] ?? null;
-        $this->db = Flight::db();
     }
 
     public function setNom($n){
@@ -24,13 +23,8 @@ class Ville extends Entity{
     }
 
     public function getAll(): array{
-        $sql = "SELECT * FROM Ville";
-        $stmt = $this->db->query($sql);
-        $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $result = [];
-        foreach($ret as $row){
-            $result = new Ville($row);
-        }
-        return $result;
+        $sql = "SELECT * FROM ville";
+        $stmt = $this->getdb()->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
