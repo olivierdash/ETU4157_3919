@@ -24,8 +24,13 @@ CREATE TABLE dons(
     id INT AUTO_INCREMENT PRIMARY KEY,
     quantite INT NOT NULL,
     id_ressource INT,
+    montant_argent DECIMAL(10,2) DEFAULT NULL,
     date_don DATE NOT NULL
 );
+
+CREATE OR REPLACE view dons_argent AS 
+SELECT CAST(r.nom as INT) as nomtant FROM ressources r JOIN
+type t ON r.type_id = t.id JOIN dons d ON d.id_ressource = r.id WHERE t.nom = 'argent';
 
 CREATE OR REPLACE view v_ressources_lib as 
 SELECT v.nom as 'nom_ville', r.nom, r.ville_id, t.nom as 'type_ressource', r.prixUnitaire, d.quantite, d.date_don
@@ -69,7 +74,8 @@ INSERT INTO ressources (nom, ville_id, type_id, prixUnitaire) VALUES
 ('Kit de premier secours', 5, 2, 45.00),-- Lille (Materiaux)
 ('Bouteilles d''eau (pack)', 6, 1, 3.50), -- Strasbourg (Nature)
 ('Riz (sac 5kg)', 1, 1, 7.20),          -- Paris (Nature)
-('Subvention Exceptionnelle', 2, 3, 1.00);-- Lyon (Argent)
+('Subvention Exceptionnelle', 2, 3, 1.00),-- Lyon (Argent)
+('10000', 2, 3, 1.00);-- Lyon (Argent)
 
 INSERT INTO dons (quantite, id_ressource, date_don) VALUES 
 (30, 6, '2024-06-15'),  -- 30 kits secours à Lille
