@@ -25,9 +25,8 @@ class Ressource extends Entity
 
     public function getAll()
     {
-        $db = Flight::db();
         $sql = "SELECT * FROM Ressources";
-        $stmt = $db->query($sql);
+        $stmt = $this->db->query($sql);
         $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $result = [];
         foreach ($ret as $row) {
@@ -38,9 +37,8 @@ class Ressource extends Entity
 
     public function getByVille($villeId)
     {
-        $db = Flight::db();
         $sql = "SELECT * FROM Ressources WHERE ville_id = ?";
-        $stmt = $db->prepare($sql);
+        $stmt = $this->db->prepare($sql);
         $stmt->execute([$villeId]);
         $result = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -51,9 +49,8 @@ class Ressource extends Entity
 
     public function getRessourceLib(): array
     {
-        $db = Flight::db();
         $sql = "SELECT * FROM v_ressources_lib";
-        $stmt = $db->query($sql);
+        $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
