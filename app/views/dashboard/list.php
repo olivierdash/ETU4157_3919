@@ -74,7 +74,6 @@
                                 <span>Simulation</span>
                             </a>
                         </div>
-
                     </li>
                 </ul>
             </div>
