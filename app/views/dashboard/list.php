@@ -93,11 +93,11 @@
                     <span class="stat-label">Sinistrés</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value"><?=  $count_ville ?></span>
+                    <span class="stat-value"><?= $count_ville ?></span>
                     <span class="stat-label">Villes</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value">89</span>
+                    <span class="stat-value"><?= $countDons ?></span>
                     <span class="stat-label">Dons</span>
                 </div>
             </div>

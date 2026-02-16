@@ -14,6 +14,12 @@
             $this->date = $date;
             $this->db = Flight::db();
         }
+
+        public function countDons() {
+            $sql = "SELECT COUNT(*) FROM dons";
+            $stmt = $this->db->query($sql);
+            return $stmt->fetchColumn();
+        }
         public function getAll() {
             $sql = "SELECT * FROM dons";
             $stmt = $this->db->query($sql);
