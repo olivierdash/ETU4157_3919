@@ -4,6 +4,8 @@ use PDO;
 
 class Entity{
     private $id;
+    private $db;
+
     public function getId(){
         return $this->id;
     }
