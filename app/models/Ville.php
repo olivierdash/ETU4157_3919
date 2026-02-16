@@ -7,11 +7,11 @@ use PDO;
 class Ville extends Entity{
     private $nom;
     
-    public function _construct($data = []){
+    public function __construct($data = []){
         if(empty($data)) return;
-        $t    = $data['id'] ?? null;
+        $t = $data['id'] ?? null;
         $this->setId($t);
-        $this->name  = $data['nom'] ?? null;
+        $this->nom  = $data['nom'] ?? null;
         $this->db = Flight::db();
     }
 
