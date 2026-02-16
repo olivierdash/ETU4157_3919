@@ -28,12 +28,17 @@ class Ville extends Entity{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-    public function getAllWithRessourcesDons(): array{
-        $sql = "CREATE view v_ressources_lib as 
-SELECT r.nom, r.ville_id, t.nom as 'type_ressource', r.prixUnitaire
-FROM ressources r
-JOIN type t ON r.type_id = t.id";
+    public function getAllWithRessourcesLib(): array{
+        $r = new Ressource();
+        $ret = $r->getRessourceLib();
         $result = [];
+        foreach($ret as $row){
+            $key = $row['ville_id'];
+            if(! isset($result[$key])) {
+                $result['ville_id'] = [];
+            }
+            $result['ville_id'][] = $row;
+        }
+        return $result;
     }
 }
