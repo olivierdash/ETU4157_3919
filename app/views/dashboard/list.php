@@ -201,7 +201,7 @@
     </div>
 
     <!-- Script pour le menu mobile -->
-    <script>
+    <script  nonce="<?= Flight::get('csp_nonce') ?>">
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');
