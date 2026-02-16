@@ -1,6 +1,6 @@
 <?php
 
-use PDO;
+use Flight;
 
 class Entity{
     private $id;
@@ -12,6 +12,14 @@ class Entity{
 
     public function setId($id){
         $this->id = $id;
+    }
+
+    public function __construct(){
+        $this->db = Flight::db();
+    }
+    
+    public function getdb() {
+        return $this->db;
     }
 }
 

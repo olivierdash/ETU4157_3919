@@ -1,7 +1,6 @@
 <?php
     namespace app\models;
 
-    use Flight;
     use Entity;
     use PDO;
 
@@ -13,12 +12,10 @@
         public function __construct($quantite, $date){
             $this->quantite = $quantite;
             $this->date = $date;
-            $this->db = Flight::db();
         }
-
         public function getAll() {
             $sql = "SELECT * FROM Dons";
-            $stmt = $this->db->query($sql);
+            $stmt = $this->getdb()->query($sql);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         }
