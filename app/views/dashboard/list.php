@@ -50,12 +50,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/collectes" class="nav-link">
-                            <span class="nav-icon">📦</span>
-                            <span>Collectes</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a href="<?= BASE_URL ?>/dons" class="nav-link">
                             <span class="nav-icon">🎁</span>
                             <span>Dons</span>
@@ -80,45 +74,9 @@
                             <span>Ressources</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/rapports" class="nav-link">
-                            <span class="nav-icon">📄</span>
-                            <span>Rapports</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Section Administration -->
-            <div class="nav-section">
-                <h4 class="nav-section-title">Administration</h4>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/utilisateurs" class="nav-link">
-                            <span class="nav-icon">⚙️</span>
-                            <span>Utilisateurs</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/parametres" class="nav-link">
-                            <span class="nav-icon">🔧</span>
-                            <span>Paramètres</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </nav>
-
-        <!-- User Profile -->
-        <div class="sidebar-footer">
-            <div class="user-profile">
-                <div class="user-avatar">JD</div>
-                <div class="user-info">
-                    <span class="user-name">Jean Dupont</span>
-                    <span class="user-role">Administrateur</span>
-                </div>
-            </div>
-        </div>
     </aside>
 
     <!-- Main Content Wrapper -->
