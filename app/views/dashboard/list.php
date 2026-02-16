@@ -43,7 +43,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/dons" class="nav-link">
+                        <a href="<?= BASE_URL ?>/collectes" class="nav-link">
                             <span class="nav-icon">🎁</span>
                             <span>Dons</span>
                         </a>
