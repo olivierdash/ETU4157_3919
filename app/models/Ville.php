@@ -27,6 +27,13 @@ class Ville extends Entity
         return $this->nom;
     }
 
+    public function getDonsByVille($ville_id) {
+        $sql = "SELECT * FROM v_dons_lib WHERE ville_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$ville_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getAll(): array
     {
         $sql = "SELECT * FROM ville";

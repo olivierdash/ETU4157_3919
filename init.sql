@@ -36,7 +36,7 @@ JOIN dons d ON d.id_ressource = r.id;
 
 CREATE OR REPLACE view v_dons_lib as 
 SELECT r.nom nom_ressource, d.quantite quantite_dons FROM ressources r
-JOIN dons d ON r.id = d.id_ressource WHERE r.ville_id = ?;
+JOIN dons d ON r.id = d.id_ressource;
 
 INSERT INTO type (nom) VALUES 
 ('nature'),
