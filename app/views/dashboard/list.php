@@ -5,63 +5,219 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC - Suivi des Collectes</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/styles.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/styles2.css">
 </head>
 
 <body>
-    <header class="main-header">
-        <h1>Tableau de Bord des Sinistrés</h1>
-        <p>Suivi des besoins et distribution des dons - Février 2026</p>
-    </header>
+    <!-- Menu Toggle Mobile -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        <span></span>
+    </button>
 
-    <main class="container">
-        <div class="dashboard-grid">
-            <?php foreach($ressource_lib as $row): ?>
-                <article class="city-card">
-                <div class="card-header">
-                    <h2><?= $row['nom_ville']; ?></h2>
-                    <span class="city-id">ID: 2</span>
+    <!-- Overlay Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <!-- Brand -->
+        <div class="sidebar-brand">
+            <a href="<?= BASE_URL ?>" class="brand-logo">
+                <div class="logo-icon">BN</div>
+                <div class="brand-text">
+                    <span class="brand-name">BNGRC</span>
+                    <span class="brand-subtitle">Gestion Humanitaire</span>
                 </div>
+            </a>
+        </div>
 
-                <div class="card-body">
-                    <section class="section-besoins">
-                        <h3>Besoins (Ressources)</h3>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Type</th>
-                                    <th>P.U.</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach($row['besoins'] as $ligne): ?>
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+            <!-- Section Principale -->
+            <div class="nav-section">
+                <h4 class="nav-section-title">Menu Principal</h4>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/dashboard" class="nav-link active">
+                            <span class="nav-icon">📊</span>
+                            <span>Tableau de Bord</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/sinistres" class="nav-link">
+                            <span class="nav-icon">👥</span>
+                            <span>Sinistrés</span>
+                            <span class="nav-badge">156</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/collectes" class="nav-link">
+                            <span class="nav-icon">📦</span>
+                            <span>Collectes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/dons" class="nav-link">
+                            <span class="nav-icon">🎁</span>
+                            <span>Dons</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Section Gestion -->
+            <div class="nav-section">
+                <h4 class="nav-section-title">Gestion</h4>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/villes" class="nav-link">
+                            <span class="nav-icon">🏙️</span>
+                            <span>Villes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/ressources" class="nav-link">
+                            <span class="nav-icon">📋</span>
+                            <span>Ressources</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/rapports" class="nav-link">
+                            <span class="nav-icon">📄</span>
+                            <span>Rapports</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Section Administration -->
+            <div class="nav-section">
+                <h4 class="nav-section-title">Administration</h4>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/utilisateurs" class="nav-link">
+                            <span class="nav-icon">⚙️</span>
+                            <span>Utilisateurs</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/parametres" class="nav-link">
+                            <span class="nav-icon">🔧</span>
+                            <span>Paramètres</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- User Profile -->
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">JD</div>
+                <div class="user-info">
+                    <span class="user-name">Jean Dupont</span>
+                    <span class="user-role">Administrateur</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+        <!-- Header Principal -->
+        <header class="main-header">
+            <h1>Tableau de Bord des Sinistrés</h1>
+            <p>Suivi des besoins et distribution des dons - Février 2026</p>
+            
+            <!-- Stats rapides -->
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-value">156</span>
+                    <span class="stat-label">Sinistrés</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">24</span>
+                    <span class="stat-label">Villes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">89</span>
+                    <span class="stat-label">Dons</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenu Principal -->
+        <main class="container">
+            <div class="dashboard-grid">
+                <?php foreach($ressource_lib as $row): ?>
+                <article class="city-card">
+                    <div class="card-header">
+                        <h2><?= $row['nom_ville']; ?></h2>
+                        <span class="city-id">ID: <?= $row['id_ville'] ?? 'N/A'; ?></span>
+                    </div>
+
+                    <div class="card-body">
+                        <section class="section-besoins">
+                            <h3>Besoins (Ressources)</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Type</th>
+                                        <th>P.U.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($row['besoins'] as $ligne): ?>
                                     <tr>
                                         <td><?= $ligne['nom'] ?></td>
-                                        <td><span class="badge mat"><?= $ligne['type_ressource']; ?></span></td>
+                                        <td>
+                                            <span class="badge <?= strtolower($ligne['type_ressource']) === 'materiel' ? 'mat' : 'fin' ?>">
+                                                <?= $ligne['type_ressource']; ?>
+                                            </span>
+                                        </td>
                                         <td><?= $ligne['prixUnitaire'] ?></td>
                                     </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </section>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </section>
 
-                    <section class="section-dons">
-                        <h3>Dons Attribués</h3>
-                        <ul class="donation-list">
-                            <li>
-                                <div class="donation-info">
-                                    <span class="qty">50 unités</span>
-                                    <span class="date">Reçu le: 05/03/2024</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </section>
-                </div>
-            </article>
-            <?php endforeach; ?>
-        </div>
-    </main>
+                        <section class="section-dons">
+                            <h3>Dons Attribués</h3>
+                            <ul class="donation-list">
+                                <li>
+                                    <div class="donation-info">
+                                        <span class="qty">50 unités</span>
+                                        <span class="date">Reçu le: 05/03/2024</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </article>
+                <?php endforeach; ?>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script pour le menu mobile -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+        });
+    </script>
 </body>
 
 </html>
