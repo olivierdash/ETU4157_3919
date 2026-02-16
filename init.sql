@@ -33,6 +33,10 @@ FROM ressources r
 JOIN type t ON r.type_id = t.id
 JOIN ville v ON v.id = r.ville_id;
 
+CREATE OR REPLACE view v_dons_lib as 
+SELECT r.nom nom_ressource, d.quantite quantite_dons FROM ressources r
+JOIN dons d ON r.id = d.id_ressource WHERE r.ville_id = ?;
+
 INSERT INTO type (nom) VALUES 
 ('nature'),
 ('materiaux'),
