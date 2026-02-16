@@ -4,27 +4,33 @@ namespace app\models;
 use Flight;
 use PDO;
 
-class Ville extends Entity{
+class Ville extends Entity
+{
     private $nom;
-    
-    public function __construct($data = []){
-        if(empty($data)) return;
+    private $db;
+
+    public function __construct($data = [])
+    {
         $t = $data['id'] ?? null;
         $this->setId($t);
-        $this->nom  = $data['nom'] ?? null;
+        $this->nom = $data['nom'] ?? null;
+        $this->db = Flight::db();
     }
 
-    public function setNom($n){
+    public function setNom($n)
+    {
         $this->nom = $n;
     }
 
-    public function getNom(){
+    public function getNom()
+    {
         return $this->nom;
     }
 
-    public function getAll(): array{
+    public function getAll(): array
+    {
         $sql = "SELECT * FROM ville";
-        $stmt = $this->getdb()->query($sql);
+        $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

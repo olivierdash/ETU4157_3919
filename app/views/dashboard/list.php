@@ -16,7 +16,6 @@
 
     <main class="container">
         <div class="dashboard-grid">
-
             <?php foreach($ressource_lib as $row): ?>
                 <article class="city-card">
                 <div class="card-header">

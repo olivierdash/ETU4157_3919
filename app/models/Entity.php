@@ -1,10 +1,8 @@
 <?php
     namespace app\models;
-use Flight;
 
 class Entity{
     private $id;
-    private $db;
 
     public function getId(){
         return $this->id;
@@ -14,13 +12,6 @@ class Entity{
         $this->id = $id;
     }
 
-    public function __construct(){
-        $this->db = Flight::db();
-    }
-    
-    public function getdb() {
-        return $this->db;
-    }
 }
 
 ?>
