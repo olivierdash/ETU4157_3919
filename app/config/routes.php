@@ -4,6 +4,7 @@ use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
 use app\controllers\VilleController;
+use app\controllers\RessourceController;
 /** 
  * @var Router $router 
  * @var Engine $app
@@ -13,8 +14,8 @@ use app\controllers\VilleController;
 $router->group('', function(Router $router) use ($app) {
     
     $router->get('/', function() use ($app) {
-        $lstVille = VilleController::getAll();
-        $app->render('dashboard/list', ['villes' => $lstVille]);
+        $ressource_lib = RessourceController::getAllWithRessourcesLib();
+        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib]);
     });    
 
 }, [SecurityHeadersMiddleware::class]);

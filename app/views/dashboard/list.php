@@ -17,9 +17,10 @@
     <main class="container">
         <div class="dashboard-grid">
 
-            <article class="city-card">
+            <?php foreach($ressource_lib as $row): ?>
+                <article class="city-card">
                 <div class="card-header">
-                    <h2>Lyon</h2>
+                    <h2><?= $row['ville_id']; ?></h2>
                     <span class="city-id">ID: 2</span>
                 </div>
 
@@ -35,16 +36,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Sac de Ciment 25kg</td>
-                                    <td><span class="badge mat">Matériaux</span></td>
-                                    <td>8.50 Ar</td>
-                                </tr>
-                                <tr>
-                                    <td>Briques (palette)</td>
-                                    <td><span class="badge mat">Matériaux</span></td>
-                                    <td>120.00 Ar</td>
-                                </tr>
+                                <?php foreach($row['besoins'] as $ligne): ?>
+                                    <tr>
+                                        <td><?= $ligne['nom'] ?></td>
+                                        <td><span class="badge mat"><?= $ligne['type_ressource']; ?></span></td>
+                                        <td><?= $ligne['prixUnitaire'] ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </section>
@@ -62,32 +60,7 @@
                     </section>
                 </div>
             </article>
-
-            <article class="city-card">
-                <div class="card-header">
-                    <h2>Paris</h2>
-                    <span class="city-id">ID: 1</span>
-                </div>
-                <div class="card-body">
-                    <section class="section-besoins">
-                        <h3>Besoins (Ressources)</h3>
-                        <table class="data-table">
-                            <tbody>
-                                <tr>
-                                    <td>Lot de Conserves</td>
-                                    <td><span class="badge nat">Nature</span></td>
-                                    <td>2.50 Ar</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-                    <section class="section-dons">
-                        <h3>Dons Attribués</h3>
-                        <p class="empty-msg">Aucun don enregistré pour le moment.</p>
-                    </section>
-                </div>
-            </article>
-
+            <?php endforeach; ?>
         </div>
     </main>
 </body>
