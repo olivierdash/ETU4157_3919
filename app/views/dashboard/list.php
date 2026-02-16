@@ -93,7 +93,7 @@
                     <span class="stat-label">Sinistrés</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-value">24</span>
+                    <span class="stat-value"><?=  $count_ville ?></span>
                     <span class="stat-label">Villes</span>
                 </div>
                 <div class="stat-item">
@@ -145,7 +145,7 @@
                             <ul class="donation-list">
                                 <li>
                                     <div class="donation-info">
-                                        <span class="qty">50 unités</span>
+                                        <span class="qty"><?= $row['dons'] ?> unités</span>
                                         <span class="date">Reçu le: 05/03/2024</span>
                                     </div>
                                 </li>
