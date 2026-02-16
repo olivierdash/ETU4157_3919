@@ -27,4 +27,13 @@ class Ville extends Entity{
         $stmt = $this->getdb()->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    public function getAllWithRessourcesDons(): array{
+        $sql = "CREATE view v_ressources_lib as 
+SELECT r.nom, r.ville_id, t.nom as 'type_ressource', r.prixUnitaire
+FROM ressources r
+JOIN type t ON r.type_id = t.id";
+        $result = [];
+    }
 }

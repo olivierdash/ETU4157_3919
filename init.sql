@@ -27,6 +27,12 @@ CREATE TABLE dons(
     date_don DATE NOT NULL
 );
 
+CREATE view v_ressources_lib as 
+SELECT r.nom, r.ville_id, t.nom as 'type_ressource', r.prixUnitaire
+FROM ressources r
+JOIN type t ON r.type_id = t.id;
+
+
 INSERT INTO type (nom) VALUES 
 ('nature'),
 ('materiaux'),
