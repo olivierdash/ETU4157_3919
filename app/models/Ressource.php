@@ -11,8 +11,6 @@ class Ressource extends Entity{
     private $prixUnitaire;
 
     public function __construct($data = []){
-        if(empty($data)) return;
-
         $i = $data['id'] ?? -1;
         $this->setId($i);
         $this->nom = $data['nom'] ?? "";
@@ -41,5 +39,11 @@ class Ressource extends Entity{
             $result[] = new Ressource($row);
         }
         return $result;
+    }
+
+    public function getRessourceLib(): array{
+        $sql = "SELECT * FROM v_ressources_lib";
+         $stmt = $this->getdb()->query($sql);
+         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

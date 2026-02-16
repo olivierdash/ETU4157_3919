@@ -33,4 +33,18 @@ class Ville extends Entity
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAllWithRessourcesLib(): array{
+        $r = new Ressource();
+        $ret = $r->getRessourceLib();
+        $result = [];
+        foreach($ret as $row){
+            $key = $row['ville_id'];
+            if(! isset($result[$key])) {
+                $result[$key] = [];
+            }
+            $result[$key][] = $row;
+        }
+        return $result;
+    }
 }
