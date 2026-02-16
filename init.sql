@@ -34,10 +34,6 @@ JOIN type t ON r.type_id = t.id
 JOIN ville v ON v.id = r.ville_id
 JOIN dons d ON d.id_ressource = r.id;
 
-CREATE OR REPLACE view v_dons_lib as 
-SELECT r.nom nom_ressource, d.quantite quantite_dons FROM ressources r
-JOIN dons d ON r.id = d.id_ressource;
-
 INSERT INTO type (nom) VALUES 
 ('nature'),
 ('materiaux'),
@@ -62,3 +58,23 @@ INSERT INTO dons (quantite, id_ressource, date_don) VALUES
 (50, 2, '2024-03-05'),  -- 50 sacs de ciment à Lyon (materiaux)
 (500, 3, '2024-03-10'), -- 500 unités d'argent à Nantes (argent)
 (20, 4, '2024-03-12');  -- 20 couvertures à Paris (materiaux)
+
+INSERT INTO ville (nom) VALUES 
+('Bordeaux'), 
+('Lille'), 
+('Strasbourg');
+
+INSERT INTO ressources (nom, ville_id, type_id, prixUnitaire) VALUES 
+('Couvertures de laine', 4, 2, 15.00), -- Bordeaux (Materiaux)
+('Kit de premier secours', 5, 2, 45.00),-- Lille (Materiaux)
+('Bouteilles d''eau (pack)', 6, 1, 3.50), -- Strasbourg (Nature)
+('Riz (sac 5kg)', 1, 1, 7.20),          -- Paris (Nature)
+('Subvention Exceptionnelle', 2, 3, 1.00);-- Lyon (Argent)
+
+INSERT INTO dons (quantite, id_ressource, date_don) VALUES 
+(30, 6, '2024-06-15'),  -- 30 kits secours à Lille
+(200, 8, '2024-12-20'), -- 200 packs d'eau à Strasbourg
+(150, 9, '2025-01-10'), -- 150 sacs de riz à Paris
+(1000, 10, '2025-02-01'), -- Gros don d'argent à Lyon
+(15, 7, '2025-02-14'),  -- 15 couvertures à Bordeaux
+(80, 1, '2025-02-15');  -- Nouveau don de conserves à Paris
