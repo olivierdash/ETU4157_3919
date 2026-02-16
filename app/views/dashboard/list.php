@@ -16,78 +16,53 @@
 
     <main class="container">
         <div class="dashboard-grid">
+            <?php foreach ($villes as $ville): ?>
+                <article class="city-card">
+                    <div class="card-header">
+                        <h2><?= $ville['nom'] ?></h2>
+                        <span class="city-id">ID: <?= $ville['id'] ?></span>
+                    </div>
 
-            <article class="city-card">
-                <div class="card-header">
-                    <h2>Lyon</h2>
-                    <span class="city-id">ID: 2</span>
-                </div>
+                    <div class="card-body">
+                        <section class="section-besoins">
+                            <h3>Besoins (Ressources)</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Type</th>
+                                        <th>P.U.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Sac de Ciment 25kg</td>
+                                        <td><span class="badge mat">Matériaux</span></td>
+                                        <td>8.50 Ar</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Briques (palette)</td>
+                                        <td><span class="badge mat">Matériaux</span></td>
+                                        <td>120.00 Ar</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </section>
 
-                <div class="card-body">
-                    <section class="section-besoins">
-                        <h3>Besoins (Ressources)</h3>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Type</th>
-                                    <th>P.U.</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Sac de Ciment 25kg</td>
-                                    <td><span class="badge mat">Matériaux</span></td>
-                                    <td>8.50 Ar</td>
-                                </tr>
-                                <tr>
-                                    <td>Briques (palette)</td>
-                                    <td><span class="badge mat">Matériaux</span></td>
-                                    <td>120.00 Ar</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-
-                    <section class="section-dons">
-                        <h3>Dons Attribués</h3>
-                        <ul class="donation-list">
-                            <li>
-                                <div class="donation-info">
-                                    <span class="qty">50 unités</span>
-                                    <span class="date">Reçu le: 05/03/2024</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </section>
-                </div>
-            </article>
-
-            <article class="city-card">
-                <div class="card-header">
-                    <h2>Paris</h2>
-                    <span class="city-id">ID: 1</span>
-                </div>
-                <div class="card-body">
-                    <section class="section-besoins">
-                        <h3>Besoins (Ressources)</h3>
-                        <table class="data-table">
-                            <tbody>
-                                <tr>
-                                    <td>Lot de Conserves</td>
-                                    <td><span class="badge nat">Nature</span></td>
-                                    <td>2.50 Ar</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-                    <section class="section-dons">
-                        <h3>Dons Attribués</h3>
-                        <p class="empty-msg">Aucun don enregistré pour le moment.</p>
-                    </section>
-                </div>
-            </article>
-
+                        <section class="section-dons">
+                            <h3>Dons Attribués</h3>
+                            <ul class="donation-list">
+                                <li>
+                                    <div class="donation-info">
+                                        <span class="qty">50 unités</span>
+                                        <span class="date">Reçu le: 05/03/2024</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </article>
+            <?php endforeach; ?>
         </div>
     </main>
 </body>
