@@ -28,10 +28,6 @@ CREATE TABLE dons(
     date_don DATE NOT NULL
 );
 
-CREATE OR REPLACE view dons_argent AS 
-SELECT CAST(r.nom as INT) as nomtant FROM ressources r JOIN
-type t ON r.type_id = t.id JOIN dons d ON d.id_ressource = r.id WHERE t.nom = 'argent';
-
 CREATE OR REPLACE view v_ressources_lib as 
 SELECT v.nom as 'nom_ville', r.nom, r.ville_id, t.nom as 'type_ressource', r.prixUnitaire, d.quantite, d.date_don
 FROM ressources r
