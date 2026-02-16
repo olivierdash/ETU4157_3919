@@ -1,6 +1,6 @@
 CREATE OR REPLACE DATABASE Collectes_et_dons;
 
-USE collectes_et_dons;
+USE Collectes_et_dons;
 
 CREATE TABLE ville(
     id INT AUTO_INCREMENT PRIMARY KEY,
