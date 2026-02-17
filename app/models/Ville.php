@@ -95,4 +95,8 @@ class Ville extends Entity
         
         return $result;
     }
+
+    public function getMontantBesoin(){
+        
+    }
 }
