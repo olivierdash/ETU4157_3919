@@ -45,23 +45,54 @@ class Ville extends Entity
         return count($this->getAll());
     }
 
-    public function getAllWithRessourcesLib(): array{
+    public function getAllWithRessourcesLib(): array {
         $r = new Ressource();
-        $ret = $r->getRessourceLib();
+        $ret = $r->getRessourceLib(); // Récupère les données de v_ressources_lib
+        
         $result = [];
-        foreach($ret as $row){
-            $key = $row['ville_id'];
-            if(! isset($result[$key])) {
-                $result[$key]['besoins'] = [];
-                $result[$key]['ville_id'] = $key;
-                $result[$key]['nom_ville'] = $row['nom_ville'];
-                $result[$key]['dons'] = 0;
+        
+        foreach($ret as $row) {
+            $key = $row['nom_ville']; // Utiliser le nom de ville comme clé
+            
+            // Initialiser la structure pour cette ville si elle n'existe pas
+            if(!isset($result[$key])) {
+                $result[$key] = [
+                    'nom_ville' => $row['nom_ville'],
+                    'besoins' => [],
+                    'total_quantite' => 0,
+                    'total_montant' => 0.00,
+                    'derniere_date' => null
+                ];
             }
-            $result[$key]['besoins'][] = $row;
-            if($row['quantite'] !== null) {
-                $result[$key]['dons'] += $row['quantite'];
+            
+            // Ajouter le besoin/ressource
+            $result[$key]['besoins'][] = [
+                'nom_ressource' => $row['nom_ressource'],
+                'type_ressource' => $row['type_ressource'],
+                'prixUnitaire' => $row['prixUnitaire'],
+                'quantite_don' => $row['quantite_don'],
+                'date_don' => $row['date_don'],
+                'montant_total' => $row['montant_total']
+            ];
+            
+            // Accumuler les totaux
+            if($row['quantite_don'] !== null) {
+                $result[$key]['total_quantite'] += $row['quantite_don'];
+            }
+            
+            if($row['montant_total'] !== null) {
+                $result[$key]['total_montant'] += $row['montant_total'];
+            }
+            
+            // Mettre à jour la date la plus récente
+            if($row['date_don'] !== null) {
+                if($result[$key]['derniere_date'] === null || 
+                   strtotime($row['date_don']) > strtotime($result[$key]['derniere_date'])) {
+                    $result[$key]['derniere_date'] = $row['date_don'];
+                }
             }
         }
+        
         return $result;
     }
 }
