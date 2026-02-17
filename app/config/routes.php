@@ -19,7 +19,8 @@ $router->group('', function(Router $router) use ($app) {
     $router->get('/', function() use ($app) {
         $ressource_lib = RessourceController::getAllWithRessourcesLib();
         $count_ville = VilleController::getCountVille();
-        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib, 'count_ville' => $count_ville]);
+        $countDons = DonsController::countDons();
+        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib, 'count_ville' => $count_ville, 'countDons' => $countDons]);
     });    
 
     $router->group('/collectes', function(Router $router) use ($app){

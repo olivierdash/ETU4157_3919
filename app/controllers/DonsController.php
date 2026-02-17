@@ -12,5 +12,9 @@
             $don = new Dons();
             $don->insert();
         }
+        public static function countDons() {
+            $dons = new Dons();
+            return $dons->countDons();
+        }
     }
 ?>

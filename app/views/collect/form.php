@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faire un Don</title>
       <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style_collect.css">
 </head>
+
 <body>
-    <div class="wrap">
-        <div class="hero">
-            <div class="heart">
-                <svg viewBox="0 0 24 24"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/></svg>
+    <!-- Decorative leaves -->
+    <svg class="deco-leaf leaf-1" width="80" height="80" viewBox="0 0 24 24" fill="#22c55e">
+        <path
+            d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
+    </svg>
+    <svg class="deco-leaf leaf-2" width="60" height="60" viewBox="0 0 24 24" fill="#facc15">
+        <path
+            d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
+    </svg>
+    <svg class="deco-leaf leaf-3" width="70" height="70" viewBox="0 0 24 24" fill="#22c55e">
+        <path
+            d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
+    </svg>
+    <svg class="deco-leaf leaf-4" width="55" height="55" viewBox="0 0 24 24" fill="#facc15">
+        <path
+            d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
+    </svg>
+
+    <div class="container">
+        <!-- Hero -->
+        <header class="hero">
+            <div class="hero-icon">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                </svg>
             </div>
             <h1>Faire un <span>Don</span></h1>
             <p>Chaque geste compte</p>
@@ -74,6 +98,61 @@
                             <div class="res-icon"><svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"/></svg></div>
                             <div class="res-name">Briques</div>
                             <div class="res-price">Lyon • <span>120 €</span></div>
+                    <div class="resource-panel" id="materiauxPanel">
+                        <div class="resource-grid">
+                            <div class="resource-item" data-id="2" data-price="8.50">
+                                <div class="resource-icon"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                    </svg></div>
+                                <div class="resource-info">
+                                    <div class="resource-name">Sac de Ciment 25kg</div>
+                                    <div class="resource-meta">
+                                        <span>📍 Lyon</span>
+                                        <span class="resource-price">8.50 €/sac</span>
+                                    </div>
+                                </div>
+                                <div class="resource-check"><svg viewBox="0 0 24 24">
+                                        <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                                    </svg></div>
+                            </div>
+                            <div class="resource-item" data-id="4" data-price="120">
+                                <div class="resource-icon"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                    </svg></div>
+                                <div class="resource-info">
+                                    <div class="resource-name">Briques (palette)</div>
+                                    <div class="resource-meta">
+                                        <span>📍 Lyon</span>
+                                        <span class="resource-price">120 €/p</span>
+                                    </div>
+                                </div>
+                                <div class="resource-check"><svg viewBox="0 0 24 24">
+                                        <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                                    </svg></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-panel" id="argentPanel">
+                        <div class="resource-grid">
+                            <div class="resource-item" data-id="3" data-price="1">
+                                <div class="resource-icon"><svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                    </svg></div>
+                                <div class="resource-info">
+                                    <div class="resource-name">Don numéraire</div>
+                                    <div class="resource-meta">
+                                        <span>📍 Nantes</span>
+                                        <span class="resource-price">Montant libre</span>
+                                    </div>
+                                </div>
+                                <div class="resource-check"><svg viewBox="0 0 24 24">
+                                        <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                                    </svg></div>
+                            </div>
                         </div>
                     </div>
                     <div class="resources" id="res-argent">
@@ -114,19 +193,26 @@
                 </div>
             </div>
 
-            <div class="submit-wrap">
-                <button type="submit" class="submit">
-                    <svg viewBox="0 0 24 24"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/></svg>
+    
+            <div class="submit-section">
+                <button type="submit" class="submit-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" />
+                    </svg>
                     Faire mon don
                 </button>
             </div>
         </form>
     </div>
 
-    <div class="modal" id="modal">
-        <div class="modal-box">
-            <div class="modal-icon">
-                <svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-box">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                </svg>
             </div>
             <h2>Merci !</h2>
             <p>Votre don va aider.</p>
@@ -215,4 +301,5 @@
         };
     </script>
 </body>
+
 </html>
