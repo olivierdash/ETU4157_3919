@@ -25,7 +25,8 @@ CREATE TABLE dons(
     id INT AUTO_INCREMENT PRIMARY KEY,
     quantite INT NOT NULL,
     id_ressource INT,
-    date_don DATE DEFAULT CURRENT_DATE
+    date_don DATE DEFAULT CURRENT_DATE,
+    dons_argent DECIMAL(10, 2) DEFAULT NULL
 );
 
 CREATE OR REPLACE view v_ressources_lib as 
