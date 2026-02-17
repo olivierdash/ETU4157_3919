@@ -20,6 +20,7 @@ CREATE TABLE ressources(
     prixUnitaire DECIMAL(10, 2) NOT NULL
 );
 
+-- ajout d'une colone
 CREATE TABLE dons(
     id INT AUTO_INCREMENT PRIMARY KEY,
     quantite INT NOT NULL,
