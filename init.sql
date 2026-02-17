@@ -34,6 +34,9 @@ JOIN type t ON r.type_id = t.id
 JOIN ville v ON v.id = r.ville_id
 JOIN dons d ON d.id_ressource = r.id;
 
+CREATE OR REPLACE view v_dons_lib_comple as
+SELECT r.nom, v.nom, date_don
+
 INSERT INTO type (nom) VALUES 
 ('nature'),
 ('materiaux'),

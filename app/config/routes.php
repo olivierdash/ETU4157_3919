@@ -18,7 +18,24 @@ $router->group('', function(Router $router) use ($app) {
     
     $router->get('/', function() use ($app) {
         $ressource_lib = RessourceController::getAllWithRessourcesLib();
-        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib]);
+        $count_ville = VilleController::getCountVille();
+        $countDons = DonsController::countDons();
+        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib, 'count_ville' => $count_ville, 'countDons' => $countDons]);
     });    
+
+    $router->group('/collectes', function(Router $router) use ($app){
+        $router->get('', [DonsController::class, 'renderFormDon']);
+
+        $router->post('/insert', [DonsController::class, 'insert']);
+    });
+
+    $router->get('/ressource/get', [RessourceController::class, 'getRessourcesByVilleId']);
+
+    $router->group('/recap', function(Router $router) use ($app){
+        $router->get('', function() use ($app){
+            $app->render('besoins/recap', [], 'content');
+            $app->render('modal');
+        });
+    });
 
 }, [SecurityHeadersMiddleware::class]);

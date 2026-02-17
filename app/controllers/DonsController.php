@@ -14,6 +14,7 @@
         public function insert() {
             $don = new Dons();
             $don->insert();
+            Flight::redirect('/');
         }
         public static function countDons() {
             $dons = new Dons();
@@ -22,7 +23,8 @@
         public function renderFormDon(){
             $v = new Ville();
             $vs = $v->getAll();
-            Flight::render('collect/form', ['ville' => $vs]);
+            Flight::render('collect/form', ['ville' => $vs], 'content');
+            Flight::render('modal');
         }
     }
 ?>

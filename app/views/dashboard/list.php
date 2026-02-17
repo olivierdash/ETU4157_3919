@@ -1,95 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BNGRC - Suivi des Collectes</title>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/styles2.css">
-</head>
-
-<body>
-    <!-- Menu Toggle Mobile -->
-    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
-        <span></span>
-    </button>
-
-    <!-- Overlay Mobile -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <!-- Brand -->
-        <div class="sidebar-brand">
-            <a href="<?= BASE_URL ?>" class="brand-logo">
-                <div class="logo-icon">BN</div>
-                <div class="brand-text">
-                    <span class="brand-name">BNGRC</span>
-                    <span class="brand-subtitle">Gestion Humanitaire</span>
-                </div>
-            </a>
-        </div>
-
-        <!-- Navigation -->
-        <nav class="sidebar-nav">
-            <!-- Section Principale -->
-            <div class="nav-section">
-                <h4 class="nav-section-title">Menu Principal</h4>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/dashboard" class="nav-link active">
-                            <span class="nav-icon">📊</span>
-                            <span>Tableau de Bord</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/collectes" class="nav-link">
-                            <span class="nav-icon">🎁</span>
-                            <span>Dons</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/collectes" class="nav-link">
-                            <span class="nav-icon">🎁</span>
-                            <span>Saisie de collectes</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Section Gestion -->
-            <div class="nav-section">
-                <h4 class="nav-section-title">Gestion</h4>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/villes" class="nav-link">
-                            <span class="nav-icon">🏙️</span>
-                            <span>Villes</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= BASE_URL ?>/ressources" class="nav-link">
-                            <span class="nav-icon">📋</span>
-                            <span>Ressources</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="btn" style="background-color: greenyellow; color: black; border-radius: 5px; padding: 5px 10px;">
-                            <a href="<?= BASE_URL ?>/simulation" class="nav-link">
-                                <span class="nav-icon">⚙️</span>
-                                <span>Simulation</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </aside>
-
-    <!-- Main Content Wrapper -->
-    <div class="main-wrapper">
-        <!-- Header Principal -->
-        <header class="main-header">
+<header class="main-header">
             <h1>Tableau de Bord des Sinistrés</h1>
             <p>Suivi des besoins et distribution des dons - Février 2026</p>
             <!-- Stats rapides -->
@@ -162,26 +72,8 @@
                 <?php endforeach; ?>
             </div>
         </main>
-    </div>
 
     <!-- Script pour le menu mobile -->
-    <script nonce="<?= Flight::get('csp_nonce') ?>">
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
-
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('open');
-            overlay.classList.remove('active');
-            menuToggle.classList.remove('active');
-        });
+    <script nonce="<?= Flight::get('csp_nonce') ?>" src="<?= BASE_URL ?>/assets/js/dashboard.js">
+       
     </script>
-</body>
-
-</html>
