@@ -58,11 +58,11 @@ INSERT INTO ressources (nom, ville_id, type_id, prixUnitaire) VALUES
 ('Briques (palette)', 2, 2, 120.00),-- Materiaux (Lyon)
 ('Farine (vrac)', 1, 1, 1.20);      -- Nature (Paris)
 -- Dons de test
-INSERT INTO dons (quantite, id_ressource, date_don) VALUES 
-(100, 1, '2024-03-01'), -- 100 kg de farine à Paris (nature)
-(50, 2, '2024-03-05'),  -- 50 sacs de ciment à Lyon (materiaux)
-(500, 3, '2024-03-10'), -- 500 unités d'argent à Nantes (argent)
-(20, 4, '2024-03-12');  -- 20 couvertures à Paris (materiaux)
+INSERT INTO dons (quantite, id_ressource, date_don, dons_argent) VALUES 
+(100, 1, '2024-03-01', NULL), -- 100 kg de farine à Paris (nature)
+(50, 2, '2024-03-05', 425.00),  -- 50 sacs de ciment à Lyon (materiaux)
+(500, 3, '2024-03-10', NULL), -- 500 unités d'argent à Nantes (argent)
+(20, 4, '2024-03-12', 240.00);  -- 20 couvertures à Paris (materiaux)
 
 INSERT INTO ville (nom) VALUES 
 ('Bordeaux'), 
