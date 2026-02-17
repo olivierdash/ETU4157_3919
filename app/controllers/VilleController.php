@@ -8,5 +8,10 @@
             $ville = new Ville();
             return $ville->getAll();
         }
+
+        public static function getCountVille() {
+            $ville = new Ville();
+            return $ville->getCountVille();
+        }
     }
 ?>

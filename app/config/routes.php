@@ -16,7 +16,12 @@ $router->group('', function(Router $router) use ($app) {
     
     $router->get('/', function() use ($app) {
         $ressource_lib = RessourceController::getAllWithRessourcesLib();
-        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib]);
+        $count_ville = VilleController::getCountVille();
+        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib, 'count_ville' => $count_ville]);
     });    
+
+    $router->get('/collectes', function() use ($app){
+        $app->render('collect/form');
+    });
 
 }, [SecurityHeadersMiddleware::class]);
