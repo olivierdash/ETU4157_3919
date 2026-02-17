@@ -13,10 +13,31 @@ class RessourceController{
     }
 
     public function getRessourcesByVilleId() {
-        $data = Flight::request()->query->getData();
-        $villeId = $data['villeId'] ?? -1;
-        $r = new Ressource([]);
-        $ret = $r->getByVille($villeId);
-        Flight::json($ret);
+        $villeId = Flight::request()->query['villeId'] ?? null;
+        
+        // Validation
+        if ($villeId === null) {
+            Flight::halt(400, 'Le paramètre villeId est requis');
+            return;
+        }
+        
+        if (!is_numeric($villeId)) {
+            Flight::halt(400, 'villeId doit être un nombre');
+            return;
+        }
+        
+        $villeId = (int)$villeId;
+        
+        // Récupérer les ressources
+        $ressource = new Ressource([]);
+        $ret = $ressource->getByVille($villeId);
+        
+        // Vérifier si les résultats existent
+        if (empty($ret)) {
+            Flight::json([], 200); // Retourner un tableau vide avec le code 200
+            return;
+        }
+        
+        Flight::json($ret, 200);
     }
 }

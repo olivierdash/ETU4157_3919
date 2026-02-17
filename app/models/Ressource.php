@@ -25,7 +25,7 @@ class Ressource extends Entity
 
     public function getAll()
     {
-        $sql = "SELECT * FROM Ressources";
+        $sql = "SELECT * FROM ressources";
         $stmt = $this->db->query($sql);
         $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $result = [];
@@ -37,7 +37,7 @@ class Ressource extends Entity
 
     public function getByVille($villeId, $typeId = null)
     {
-        $sql = "SELECT * FROM Ressources WHERE ville_id = ?";
+        $sql = "SELECT * FROM ressources WHERE ville_id = ?";
         if( $typeId !== null) {
             $sql .= " AND type_id = ?";
         }
@@ -47,11 +47,7 @@ class Ressource extends Entity
         } else {
             $stmt->execute([$villeId]);
         }
-        $result = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new Ressource($row);
-        }
-        return $result;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getRessourceLib(): array

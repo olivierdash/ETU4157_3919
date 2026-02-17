@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faire un Don</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/style_collect.css">
+
+    <script nonce="<?= Flight::get('csp_nonce') ?>" src="<?= BASE_URL ?>/assets/js/collec.js" defer>
+    </script>
 </head>
 
 <body>
@@ -20,15 +23,15 @@
             <p>Chaque geste compte</p>
         </div>
 
-        <form class="form" id="form">
+        <form class="form" id="form" method="POST" action="collectes/insert">
             <div class="form-inner">
-                <div class="group" id="villeSelect">
+                <div class="group" >
                     <label>Ville</label>
-                    <select id="ville">
+                    <select  id="villeSelect">
                         <option value="">Sélectionner une ville</option>
-                        <option value="1">Paris</option>
-                        <option value="2">Lyon</option>
-                        <option value="3">Nantes</option>
+                        <?php foreach($ville as $v): ?>
+                            <option value="<?= $v['id'] ?>"><?= $v['nom'] ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
@@ -64,7 +67,7 @@
 
                 <div class="group" id="ressources-group">
                     <label>Ressource</label>
-                    <select id="ressource">
+                    <select id="ressource" name="ressource_id">
                         <option value="">Sélectionner une ressource</option>
                     </select>
                     <div class="autres-input" id="autres-input">
@@ -73,12 +76,12 @@
                     </div>
                 </div>
 
-                <div class="group">
+                 <div class="group">
                     <label>Quantité</label>
                     <div class="qty-wrap">
                         <div class="qty">
                             <button type="button" id="q-">−</button>
-                            <input type="number" id="qty" value="1" min="1">
+                            <input type="number" id="qty" value="1" min="1" name="quantite">
                             <button type="button" id="q+">+</button>
                         </div>
                         <div class="est">
@@ -122,86 +125,6 @@
             <button class="new-btn" id="newBtn">Nouveau don</button>
         </div>
     </div>
-
-    <script>
-        const villeSelect = document.getElementById('villeSelect');
-
-        function loadAndDisplayResourcesXHR(villeId) {
-            const xhr = new XMLHttpRequest();
-
-            xhr.open('GET', "ressource/get?villeId=" + villeId, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-
-            xhr.onload = function() {
-                if (xhr.status === 200 && xhr.readyState === 4) {
-                    try {
-                        const data = JSON.parse(xhr.responseText);
-                        addMultipleRessources(data);
-                        if (onSuccess) onSuccess(data);
-                        console.log(`${data.length} ressource(s) chargée(s) avec succès`);
-                    } catch (error) {
-                        console.error('Erreur de parsing JSON:', error);
-                    }
-                } else {
-                    const error = new Error(`Erreur HTTP! Status: ${xhr.status}`);
-                    console.error(error);
-                }
-            };
-
-            xhr.onerror = function() {
-                const error = new Error('Erreur réseau');
-                console.error(error);
-                if (onError) onError(error);
-            };
-
-            xhr.send();
-        }
-
-        function addMultipleRessources(ressources, selectId = 'ressource') {
-            const selectElement = document.getElementById(selectId);
-
-            if (!selectElement) {
-                console.error(`Select avec l'id "${selectId}" non trouvé`);
-                return;
-            }
-
-            // Itérer sur chaque ressource et l'ajouter
-            ressources.forEach(ressource => {
-                const option = document.createElement('option');
-                option.value = ressource.id || ressource.ressourceId;
-                option.textContent = ressource.nom || ressource.name;
-                selectElement.appendChild(option);
-            });
-        }
-
-        villeSelect.addEventListener('change', function() {
-            const selectedVilleId = this.value;
-            if (selectedVilleId) {
-                loadAndDisplayResourcesXHR(selectedVilleId);
-            }
-        });
-
-        function getSelectedRessource(selectId = 'ressource') {
-  const selectElement = document.getElementById(selectId);
-
-  if (!selectElement) {
-    console.error(`Select avec l'id "${selectId}" non trouvé`);
-    return null;
-  }
-
-  const selectedOption = selectElement.options[selectElement.selectedIndex];
-
-  // Si aucune option sélectionnée ou option par défaut
-  if (!selectedOption.value) {
-    return null;
-  }
-
-  return {
-    id: selectedOption.value,
-    nom: selectedOption.textContent
-  };
-}
-    </script>
 </body>
 
 </html>
