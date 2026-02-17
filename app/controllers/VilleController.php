@@ -4,6 +4,7 @@
     use app\models\Ville;
 
     class VilleController {
+
         public static function getAll() {
             $ville = new Ville();
             return $ville->getAll();
