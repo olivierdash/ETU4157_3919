@@ -55,21 +55,22 @@ CREATE TABLE mouvement (
 -- ============================================================
 
 -- Vue 1 : Récapitulatif des dons avec détails complets
-CREATE OR REPLACE VIEW v_ressources_lib AS 
+CREATE OR REPLACE VIEW v_ressources_lib AS
 SELECT 
-    v.nom AS nom_ville,
-    r.nom AS nom_ressource,
-    t.nom AS type_ressource,
+    d.id as id_don, -- <--- IMPORTANT : Ajoutez ceci
+    v.nom as nom_ville,
+    v.id as ville_id,
+    r.nom as nom_ressource,
+    t.nom as type_ressource,
     r.prixUnitaire,
-    d.quantite AS quantite_don,
+    d.quantite as quantite_don,
     d.date_don,
-    (d.quantite * r.prixUnitaire) AS montant_total
+    (d.quantite * r.prixUnitaire) as montant_total
 FROM dons d
 JOIN ressources r ON d.id_ressource = r.id
 JOIN type t ON r.type_id = t.id
 JOIN besoins b ON d.id_besoins = b.id
 JOIN ville v ON b.ville_id = v.id;
-
 -- Vue 2 : Résumé des dons par ressource et ville
 CREATE OR REPLACE VIEW v_dons_lib_comple AS
 SELECT 

@@ -15,23 +15,26 @@ use flight\net\Route;
  */
 
 // Wrap all routes with SecurityHeadersMiddleware
-$router->group('', function(Router $router) use ($app) {
-    
-    $router->get('/', function() use ($app) {
+$router->group('', function (Router $router) use ($app) {
+
+    $router->get('/', function () use ($app) {
         $ressource_lib = RessourceController::getAllWithRessourcesLib();
         $count_ville = VilleController::getCountVille();
         $countDons = DonsController::countDons();
         $app->render('dashboard/list', ['ressource_lib' => $ressource_lib, 'count_ville' => $count_ville, 'countDons' => $countDons], 'content');
         $app->render('modal');
-    });    
+    });
 
-    $router->group('/dashboard', function(Router $router) use ($app){
-        $router->get('', function() use ($app){
+    // Route pour annuler un don
+    $router->get('/dons/annuler/@id', [DonsController::class, 'annuler']);
+
+    $router->group('/dashboard', function (Router $router) use ($app) {
+        $router->get('', function () use ($app) {
             $app->redirect('/');
         });
     });
 
-    $router->group('/collectes', function(Router $router) use ($app){
+    $router->group('/collectes', function (Router $router) use ($app) {
         $router->get('', [DonsController::class, 'renderFormDon']);
 
         $router->post('/insert', [DonsController::class, 'insert']);
@@ -39,22 +42,22 @@ $router->group('', function(Router $router) use ($app) {
 
     $router->get('/ressource/get', [RessourceController::class, 'getRessourcesByVilleId']);
 
-    $router->group('/recap', function(Router $router) use ($app){
-        $router->get('', function() use ($app){
+    $router->group('/recap', function (Router $router) use ($app) {
+        $router->get('', function () use ($app) {
             $app->render('besoins/recap', [], 'content');
             $app->render('modal');
         });
     });
 
-    $router->group('/dispatch', function(Router $router) use ($app){
+    $router->group('/dispatch', function (Router $router) use ($app) {
         $router->get('', [DispatchController::class, 'showDispatchForm']);
-        
+
         $router->get('/results', [DispatchController::class, 'showDispatch']);
-        
+
         $router->get('/api', [DispatchController::class, 'getDispatch']);
-        
+
         $router->get('/comparative', [DispatchController::class, 'showComparative']);
-        
+
         $router->get('/api/comparative', [DispatchController::class, 'getComparative']);
     });
 

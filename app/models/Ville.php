@@ -47,60 +47,106 @@ class Ville extends Entity
         return count($this->getAll());
     }
 
+    // public function getAllWithRessourcesLib(): array
+    // {
+    //     $r = new Ressource();
+    //     $ret = $r->getRessourceLib(); // Récupère les données de v_ressources_lib
+
+    //     $result = [];
+
+    //     foreach ($ret as $row) {
+    //         $key = $row['nom_ville']; // Utiliser le nom de ville comme clé
+
+    //         // Initialiser la structure pour cette ville si elle n'existe pas
+    //         if (!isset($result[$key])) {
+    //             $result[$key] = [
+    //                 'nom_ville' => $row['nom_ville'],
+    //                 'besoins' => [],
+    //                 'total_quantite' => 0,
+    //                 'total_montant' => 0.00,
+    //                 'derniere_date' => null
+    //             ];
+    //         }
+
+    //         // Ajouter le besoin/ressource
+    //         $result[$key]['besoins'][] = [
+    //             'nom_ressource' => $row['nom_ressource'],
+    //             'type_ressource' => $row['type_ressource'],
+    //             'prixUnitaire' => $row['prixUnitaire'],
+    //             'quantite_don' => $row['quantite_don'],
+    //             'date_don' => $row['date_don'],
+    //             'montant_total' => $row['montant_total']
+    //         ];
+
+    //         // Accumuler les totaux
+    //         if ($row['quantite_don'] !== null) {
+    //             $result[$key]['total_quantite'] += $row['quantite_don'];
+    //         }
+
+    //         if ($row['montant_total'] !== null) {
+    //             $result[$key]['total_montant'] += $row['montant_total'];
+    //         }
+
+    //         // Mettre à jour la date la plus récente
+    //         if ($row['date_don'] !== null) {
+    //             if (
+    //                 $result[$key]['derniere_date'] === null ||
+    //                 strtotime($row['date_don']) > strtotime($result[$key]['derniere_date'])
+    //             ) {
+    //                 $result[$key]['derniere_date'] = $row['date_don'];
+    //             }
+    //         }
+    //     }
+
+    //     return $result;
+    // }
+
     public function getAllWithRessourcesLib(): array
     {
-        $r = new Ressource();
-        $ret = $r->getRessourceLib(); // Récupère les données de v_ressources_lib
-
+        $villes = $this->getAll();
+        $besoinModel = new Besoin();
         $result = [];
 
-        foreach ($ret as $row) {
-            $key = $row['nom_ville']; // Utiliser le nom de ville comme clé
+        $r = new Ressource();
+        $donsData = $r->getRessourceLib();
 
-            // Initialiser la structure pour cette ville si elle n'existe pas
-            if (!isset($result[$key])) {
-                $result[$key] = [
-                    'nom_ville' => $row['nom_ville'],
-                    'besoins' => [],
-                    'total_quantite' => 0,
-                    'total_montant' => 0.00,
-                    'derniere_date' => null
-                ];
-            }
+        foreach ($villes as $v) {
+            $id_ville = $v['id'];
+            $nom_ville = $v['nom'];
 
-            // Ajouter le besoin/ressource
-            $result[$key]['besoins'][] = [
-                'nom_ressource' => $row['nom_ressource'],
-                'type_ressource' => $row['type_ressource'],
-                'prixUnitaire' => $row['prixUnitaire'],
-                'quantite_don' => $row['quantite_don'],
-                'date_don' => $row['date_don'],
-                'montant_total' => $row['montant_total']
+            $result[$nom_ville] = [
+                'id_ville' => $id_ville,
+                'besoins_sinistres' => $besoinModel->getByVille($id_ville),
+                'dons_recus' => [],
+                'total_quantite' => 0,
+                'total_montant' => 0.00,
+                'derniere_date' => null
             ];
+        }
 
-            // Accumuler les totaux
-            if ($row['quantite_don'] !== null) {
-                $result[$key]['total_quantite'] += $row['quantite_don'];
-            }
+        foreach ($donsData as $row) {
+            $key = $row['nom_ville'];
+            if (isset($result[$key])) {
+                // CORRECTION ICI : On s'assure que l'ID est bien présent
+                // Si votre base utilise 'id', on le renomme en 'id_don' pour la vue
+                $row['id_don'] = $row['id_don'] ?? $row['id'] ?? null;
 
-            if ($row['montant_total'] !== null) {
-                $result[$key]['total_montant'] += $row['montant_total'];
-            }
+                $result[$key]['dons_recus'][] = $row;
 
-            // Mettre à jour la date la plus récente
-            if ($row['date_don'] !== null) {
-                if (
-                    $result[$key]['derniere_date'] === null ||
-                    strtotime($row['date_don']) > strtotime($result[$key]['derniere_date'])
-                ) {
-                    $result[$key]['derniere_date'] = $row['date_don'];
+                $result[$key]['total_quantite'] += $row['quantite_don'] ?? 0;
+                $result[$key]['total_montant'] += $row['montant_total'] ?? 0;
+
+                // Mise à jour de la date
+                if (isset($row['date_don'])) {
+                    if ($result[$key]['derniere_date'] === null || strtotime($row['date_don']) > strtotime($result[$key]['derniere_date'])) {
+                        $result[$key]['derniere_date'] = $row['date_don'];
+                    }
                 }
             }
         }
 
         return $result;
     }
-
     public function getMontantBesoin()
     {
 
