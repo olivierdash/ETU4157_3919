@@ -33,6 +33,14 @@
         public function getDate(){
             return $this->date;
         }
+
+        public function insert(){
+            $data = Flight::request()->data->getData();
+            $sql = "INSERT INTO dons (quantite, id_ressource) VALUES (?,?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$data['quantite'], $data['ressource_id']]);
+            
+        }
     }
     
 ?>

@@ -25,8 +25,7 @@ CREATE TABLE dons(
     id INT AUTO_INCREMENT PRIMARY KEY,
     quantite INT NOT NULL,
     id_ressource INT,
-    montant_argent DECIMAL(10,2) DEFAULT NULL,
-    date_don DATE NOT NULL
+    date_don DATE DEFAULT CURRENT_DATE
 );
 
 CREATE OR REPLACE view v_ressources_lib as 
@@ -35,6 +34,9 @@ FROM ressources r
 JOIN type t ON r.type_id = t.id
 JOIN ville v ON v.id = r.ville_id
 JOIN dons d ON d.id_ressource = r.id;
+
+CREATE OR REPLACE view v_dons_lib_comple as
+SELECT r.nom, v.nom, date_don
 
 INSERT INTO type (nom) VALUES 
 ('nature'),
