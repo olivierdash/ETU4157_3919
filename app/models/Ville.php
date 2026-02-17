@@ -97,6 +97,17 @@ class Ville extends Entity
     }
 
     public function getMontantBesoin(){
-        
+        $sql = "SELECT sum(montant_total) as montant
+FROM v_ressources_lib";
+    $stmt = $this->db->query($sql);
+    return $stmt->fetch(PDO::FETCH_ASSOC)['montant'];
+    }
+
+    public function getMontantTotal(){
+        $sql = "SELECT sum(b.quantite * r.prixUnitaire) as montant
+FROM besoins b 
+JOIN ressources r ON b.id_ressource = r.id";
+    $stmt = $this->db->query($sql);
+    return $stmt->fetch(PDO::FETCH_ASSOC)['montant'];
     }
 }

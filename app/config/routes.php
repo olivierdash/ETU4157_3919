@@ -7,8 +7,9 @@ use app\controllers\VilleController;
 use app\controllers\RessourceController;
 use app\controllers\DonsController;
 use app\controllers\DispatchController;
+use app\controllers\BesoinController;
+use app\models\Besoin;
 use flight\net\Route;
-
 /** 
  * @var Router $router 
  * @var Engine $app
@@ -40,10 +41,18 @@ $router->group('', function(Router $router) use ($app) {
     $router->get('/ressource/get', [RessourceController::class, 'getRessourcesByVilleId']);
 
     $router->group('/recap', function(Router $router) use ($app){
-        $router->get('', function() use ($app){
-            $app->render('besoins/recap', [], 'content');
-            $app->render('modal');
-        });
+        $router->get('', [VilleController::class, 'renderRecap']);
+    });
+
+    $router->get('/achats', function() {
+        $besoinController = new BesoinController(new Besoin(), Flight::get('database'));
+        $besoinController->showAchatPage();
+    });
+    
+    // API : Effectuer un achat
+    $router->post('/acheter-ressource', function() {
+        $besoinController = new BesoinController(new Besoin(), Flight::get('database'));
+        $besoinController->acheterRessource();
     });
 
     $router->group('/dispatch', function(Router $router) use ($app){

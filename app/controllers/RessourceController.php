@@ -14,7 +14,7 @@ class RessourceController{
 
     public function getRessourcesByVilleId() {
         $villeId = Flight::request()->query['villeId'] ?? null;
-        
+        $typeId = Flight::request()->query['typeID'] ?? null;
         // Validation
         if ($villeId === null) {
             Flight::halt(400, 'Le paramètre villeId est requis');

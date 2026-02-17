@@ -26,11 +26,11 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Besoins Totaux</div>
-                <div class="stat-value">24</div>
+                <div class="stat-value"><?= $besoin_total ?></div>
             </div>
             <div class="stat-card" style="border-left-color: var(--y);">
                 <div class="stat-label">Besoins satisfaits</div>
-                <div class="stat-value">4</div>
+                <div class="stat-value"><?= $besoin_restant ?></div>
             </div>
         </div>
 

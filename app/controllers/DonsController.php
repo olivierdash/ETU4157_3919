@@ -22,8 +22,9 @@
         }
         public function renderFormDon(){
             $v = new Ville();
+            $t = new TypeController();
             $vs = $v->getAll();
-            Flight::render('collect/form', ['ville' => $vs], 'content');
+            Flight::render('collect/form', ['ville' => $vs, 'types'=> $t->getAll()], 'content');
             Flight::render('modal');
         }
     }
