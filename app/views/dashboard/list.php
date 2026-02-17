@@ -1,85 +1,105 @@
+<link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/dashboard.css">
+<?php
+/**
+ * TABLEAU DE BORD DES SINISTRÉS
+ * Vue pour FlightPHP - Tableau par ville
+ */
 
-<header class="main-header">
-            <h1>Tableau de Bord des Sinistrés</h1>
-            <p>Suivi des besoins et distribution des dons - Février 2026</p>
-            
-            <!-- Boutons d'action -->
-            <div class="header-actions">
-                <a href="/dispatch" class="btn btn-dispatch">
-                    📦 Dispatcher les Ressources
-                </a>
-            </div>
-            
-            <!-- Stats rapides -->
-            <div class="header-stats">
-                <div class="stat-item">
-                    <span class="stat-value">156</span>
-                    <span class="stat-label">Sinistrés</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value">24</span>
-                    <span class="stat-label">Villes</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value"><?= $countDons ?></span>
-                    <span class="stat-label">Dons</span>
-                </div>
-            </div>
-        </header>
+$totalSinistres = 156;
+$totalVilles = count($ressource_lib);
+$totalMontant = 0;
+$totalDons = 0;
 
-        <!-- Contenu Principal -->
-        <main class="container">
-            <div class="dashboard-grid">
-                <?php foreach ($ressource_lib as $row): ?>
-                    <article class="city-card">
-                        <div class="card-header">
-                            <h2><?= $row['nom_ville']; ?></h2>
+foreach ($ressource_lib as $villeData) {
+    $totalMontant += $villeData['total_montant'] ?? 0;
+    $totalDons += count($villeData['besoins'] ?? []);
+}
+?>
+
+<header class="header">
+    <div class="header-content">
+        <h1>Tableau de Bord des Sinistrés</h1>
+        <p>Suivi des besoins et distribution des dons</p>
+    </div>
+    <div class="stats-grid">
+        <div class="stat">
+            <div class="stat-value"><?= $totalSinistres ?></div>
+            <div class="stat-label">Sinistrés</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value"><?= $totalVilles ?></div>
+            <div class="stat-label">Villes</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value"><?= $totalDons ?></div>
+            <div class="stat-label">Dons</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">€<?= number_format($totalMontant, 0) ?></div>
+            <div class="stat-label">Montant Total</div>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-container">
+    <div class="dashboard-toolbar">
+        <input 
+            type="text" 
+            id="searchInput"
+            placeholder="Rechercher..." 
+            onkeyup="filterTable(this.value)"
+        >
+        <button onclick="printTable()" class="btn-print">
+            Imprimer
+        </button>
+    </div>
+
+    <?php foreach ($ressource_lib as $ville => $villeData): ?>
+        <?php if (!empty($villeData['besoins'])): ?>
+            <div class="ville-section">
+                <div class="ville-header">
+                    <h2><?= htmlspecialchars($ville) ?></h2>
+                    <div class="ville-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Total reçu</span>
+                            <span class="summary-value"><?= $villeData['total_quantite'] ?? 0 ?> unités</span>
                         </div>
-
-                        <div class="card-body">
-                            <section class="section-besoins">
-                                <h3>Besoins (Ressources)</h3>
-                                <table class="data-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Type</th>
-                                            <th>P.U.</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($row['besoins'] as $ligne): ?>
-                                            <tr>
-                                                <td><?= $ligne['nom'] ?></td>
-                                                <td>
-                                                    <span
-                                                        class="badge <?= strtolower($ligne['type_ressource']) === 'materiel' ? 'mat' : 'fin' ?>">
-                                                        <?= $ligne['type_ressource']; ?>
-                                                    </span>
-                                                </td>
-                                                <td><?= $ligne['prixUnitaire'] ?></td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </section>
-
-                        <section class="section-dons">
-                            <h3>Dons Attribués</h3>
-                            <ul class="donation-list">
-                                <li>
-                                    <div class="donation-info">
-                                        <span class="qty">50 unités</span>
-                                        <span class="date">Reçu le: 05/03/2024</span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </section>
+                        <div class="summary-item">
+                            <span class="summary-label">Montant</span>
+                            <span class="summary-value">€<?= number_format($villeData['total_montant'] ?? 0, 0) ?></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Dernier don</span>
+                            <span class="summary-value"><?= $villeData['derniere_date'] ? date('d/m/y', strtotime($villeData['derniere_date'])) : '–' ?></span>
+                        </div>
                     </div>
-                </article>
-                <?php endforeach; ?>
-            </div>
-        </main>
+                </div>
 
-    <!-- Script pour le menu mobile -->
- 
+                <table class="data-table ville-table">
+                    <thead>
+                        <tr>
+                            <th>Ressource</th>
+                            <th>Type</th>
+                            <th>Prix Unit.</th>
+                            <th>Quantité</th>
+                            <th>Montant</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($villeData['besoins'] as $don): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($don['nom_ressource']) ?></td>
+                                <td><span class="badge badge-<?= strtolower(str_replace(' ','-',$don['type_ressource'])) ?>"><?= htmlspecialchars($don['type_ressource']) ?></span></td>
+                                <td class="align-right">€<?= number_format($don['prixUnitaire'], 2, ',', ' ') ?></td>
+                                <td class="align-center"><?= $don['quantite_don'] ?? 0 ?></td>
+                                <td class="amount">€<?= number_format(($don['quantite_don'] ?? 0) * ($don['prixUnitaire'] ?? 0), 0) ?></td>
+                                <td class="date"><?= date('d/m/y', strtotime($don['date_don'] ?? 'now')) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
