@@ -5,11 +5,7 @@
             <!-- Stats rapides -->
             <div class="header-stats">
                 <div class="stat-item">
-                    <span class="stat-value">156</span>
-                    <span class="stat-label">Sinistrés</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value">24</span>
+                    <span class="stat-value"><?= $count_ville ?></span>
                     <span class="stat-label">Villes</span>
                 </div>
                 <div class="stat-item">
