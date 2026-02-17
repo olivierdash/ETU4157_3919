@@ -72,6 +72,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/achats" class="nav-link">
+                            <span class="nav-icon">📋</span>
+                            <span>Achats</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <div class="btn"
                             style="background-color: greenyellow; color: black; border-radius: 5px; padding: 5px 10px;">
                             <a href="<?= BASE_URL ?>/dispatch" class="nav-link">

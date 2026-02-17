@@ -44,12 +44,39 @@ CREATE TABLE dons(
 
 CREATE TABLE mouvement (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_don INT NOT NULL,
+    id_don INT NOT NULL,    
     type_action ENUM('AJOUT', 'ANNULATION', 'MODIFICATION') NOT NULL,
     quantite_mouvement INT NOT NULL,
     date_mouvement DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_don) REFERENCES dons(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS distribution (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ville_id INT NOT NULL,
+    date_distribution DATE NOT NULL DEFAULT CURRENT_DATE,
+    remarques VARCHAR(50),
+    FOREIGN KEY (ville_id) REFERENCES ville(id) ON DELETE RESTRICT,
+    INDEX idx_ville (ville_id),
+    INDEX idx_date (date_distribution)
+);
+
+-- Détail des distributions (items distribués)
+CREATE TABLE IF NOT EXISTS distribution_detail (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    distribution_id INT NOT NULL,
+    ressource_id INT NOT NULL,
+    quantite INT NOT NULL CHECK (quantite > 0),
+    FOREIGN KEY (distribution_id) REFERENCES distribution(id) ON DELETE CASCADE,
+    FOREIGN KEY (ressource_id) REFERENCES ressources(id) ON DELETE RESTRICT,
+    UNIQUE KEY uk_distribution_ressource (distribution_id, ressource_id),
+    INDEX idx_ressource (ressource_id)
+);
+
+SELECT sum(b.quantite * r.prixUnitaire) as montant_total
+FROM besoins b 
+JOIN ressources r ON b.id_ressource = r.id
+JOIN distribution_detail d ON d.ressource_id = r.id;
 -- ============================================================
 -- VUES CORRIGÉES
 -- ============================================================
@@ -142,3 +169,45 @@ INSERT INTO dons (quantite, id_besoins, id_ressource, date_don, dons_argent) VAL
 (150, 8, 9, '2025-01-10', NULL),    -- Riz Paris
 (1000, 9, 10, '2025-02-01', NULL),  -- Subvention Lyon
 (80, 10, 5, '2025-02-15', NULL);    -- Farine Paris
+
+-- ============================================================
+-- REQUÊTES DE VÉRIFICATION
+-- ============================================================
+
+-- Voir le contenu de la première vue
+SELECT * FROM v_ressources_lib;
+
+-- Voir le résumé par ressource
+SELECT * FROM v_dons_lib_comple;
+
+-- Total des dons par ville
+SELECT 
+    v.nom AS ville,
+    SUM(d.quantite * r.prixUnitaire) AS montant_total
+FROM dons d
+JOIN ressources r ON d.id_ressource = r.id
+JOIN besoins b ON d.id_besoins = b.id
+JOIN ville v ON b.ville_id = v.id
+GROUP BY v.id
+ORDER BY montant_total DESC;
+
+
+SELECT sum(montant_total) as montant
+FROM v_ressources_lib;
+
+-- ============================================================
+-- AJOUT D'INDEX UNIQUES
+-- ============================================================
+-- Ce script ajoute des contraintes d'unicité sur les 
+
+-- Index unique sur le nom des villes
+ALTER TABLE ville 
+ADD CONSTRAINT uk_ville_nom UNIQUE (nom);
+
+-- Index unique sur le nom des types
+ALTER TABLE type 
+ADD CONSTRAINT uk_type_nom UNIQUE (nom);
+
+-- Index unique sur le nom des ressources
+ALTER TABLE ressources 
+ADD CONSTRAINT uk_ressources_nom UNIQUE (nom);

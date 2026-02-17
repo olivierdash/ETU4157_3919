@@ -37,7 +37,7 @@ class Ressource extends Entity
 
     public function getByVille($villeId, $typeId = null)
     {
-        $sql = "SELECT * FROM ressources WHERE ville_id = ?";
+        $sql = "SELECT * FROM ressources WHERE JOIN ville_id = ?";
         if( $typeId !== null) {
             $sql .= " AND type_id = ?";
         }

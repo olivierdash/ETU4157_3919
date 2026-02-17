@@ -1,92 +1,99 @@
 document.addEventListener("DOMContentLoaded", function () {
     const villeSelect = document.getElementById('villeSelect');
-    const val = document.getElementById("val");
+    const typeSelect = document.getElementById('typeRessource');
     const listRessource = document.getElementById('ressource');
+    const valDisplay = document.getElementById("val");
+    const qtyInput = document.getElementById('qty');
 
-    function loadAndDisplayResourcesXHR(villeId) {
+    /**
+     * Charge les ressources en envoyant villeId ET typeId par URL
+     */
+    function loadResources() {
+        const vId = villeSelect.value;
+        const tId = typeSelect.value;
+
+        // On n'exécute la requête que si les deux sélections sont faites
+        if (vId === "" || tId === "") {
+            listRessource.innerHTML = '<option value="">Sélectionner une ressource</option>';
+            return;
+        }
+
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', "ressource/get?villeId=" + villeId, true);
-        // xhr.setRequestHeader('Content-Type', 'application/json');
+        // URL avec double paramètre GET
+        const url = "ressource/get?villeId=" + encodeURIComponent(vId) + "&typeId=" + encodeURIComponent(tId);
+        
+        xhr.open('GET', url, true);
         xhr.onload = function () {
             if (xhr.status === 200 && xhr.readyState === 4) {
                 try {
                     const data = JSON.parse(xhr.responseText);
-                    addMultipleRessources(data);
-                    console.log(`${data.length} ressource(s) chargée(s) avec succès`);
-                } catch (error) {
-                    console.error('Erreur de parsing JSON:', error);
+                    updateRessourceSelect(data);
+                } catch (e) {
+                    console.error('Erreur parsing JSON:', e);
                 }
-            } else {
-                const error = new Error(`Erreur HTTP! Status: ${xhr.status}`);
-                console.error(error);
             }
-        };
-        xhr.onerror = function () {
-            const error = new Error('Erreur réseau');
-            console.error(error);
         };
         xhr.send(null);
     }
 
-    function addMultipleRessources(ressources) {
-        const selectElement = document.getElementById('ressource');
-        selectElement.innerHTML = "";
-        if (!selectElement) {
-            console.error(`Select avec l'id "villeSelect" non trouvé`);
-            return;
-        }
-        const temp = document.createElement('option');
-        temp.value = '';
-        temp.textContent = "Sélectionner une ressource";
-        selectElement.appendChild(temp);
-        // Itérer sur chaque ressource et l'ajouter
-        for(let i=0; i < ressources.length; i++){
-            const ressource = ressources[i];
-            console.log(ressource);
-            const option = document.createElement('option');
-            option.dataset.prix = ressource.prixUnitaire;
-            option.value = ressource.id;
-            option.textContent = ressource.nom;
-            selectElement.appendChild(option);
-        }
-    }
-
-    function decreaseQty() {
-        const qtyInput = document.getElementById('qty');
-        const currentValue = parseInt(qtyInput.value);
+    /**
+     * Remplit le select en utilisant une boucle itérative for
+     */
+    function updateRessourceSelect(ressources) {
+        listRessource.innerHTML = "";
         
+        // Option par défaut
+        const defaultOpt = document.createElement('option');
+        defaultOpt.value = "";
+        defaultOpt.textContent = "Sélectionner une ressource";
+        listRessource.appendChild(defaultOpt);
+
+        // Boucle itérative classique
+        for (let i = 0; i < ressources.length; i++) {
+            const res = ressources[i];
+            const opt = document.createElement('option');
+            opt.value = res.id; // Envoi de l'id_ressource
+            opt.dataset.prix = res.prixUnitaire;
+            opt.textContent = res.nom;
+            listRessource.appendChild(opt);
+        }
+        updateTotal();
+    }
+
+    /**
+     * Calcul du montant total
+     */
+    function updateTotal() {
         const selectedOption = listRessource.options[listRessource.selectedIndex];
-        const valeur = selectedOption.value;
-        if (currentValue > parseInt(qtyInput.min) && valeur !== "") {
-            qtyInput.value = currentValue - 1;
-            val.innerText = "";
-            const temp = qtyInput.value * selectedOption.dataset.prix;
-            val.innerText =  temp + "$";
+        const quantite = parseInt(qtyInput.value) || 0;
+        
+        if (selectedOption && selectedOption.dataset.prix) {
+            const prix = parseFloat(selectedOption.dataset.prix);
+            const total = (prix * quantite).toFixed(2);
+            valDisplay.innerText = total + " $";
+        } else {
+            valDisplay.innerText = "0.00 $";
         }
     }
-    
-    function increaseQty() {
-        const qtyInput = document.getElementById('qty');
-        const currentValue = parseInt(qtyInput.value);
-        const max = qtyInput.max ? parseInt(qtyInput.max) : null;
-        const selectedOption = listRessource.options[listRessource.selectedIndex];
-        const valeur = selectedOption.value;
 
-        if (valeur !== "") {
-            qtyInput.value = currentValue + 1;
-            val.innerText = "";
-            const temp = Mah.round(qtyInput.value * selectedOption.dataset.prix, 2);
-            val.innerText =  temp + "$";
-        }
-    }
-    
-    document.getElementById('q-').addEventListener('click', decreaseQty);
-    document.getElementById('q+').addEventListener('click', increaseQty);
+    // --- Écouteurs d'événements ---
 
-    villeSelect.addEventListener('change', function () {
-        const selectedVilleId = this.value;
-        if (selectedVilleId) {
-            loadAndDisplayResourcesXHR(selectedVilleId);
+    // Déclenchement de la requête si l'un des deux change
+    villeSelect.addEventListener('change', loadResources);
+    typeSelect.addEventListener('change', loadResources);
+
+    // Mise à jour du prix lors du changement de ressource ou de quantité
+    listRessource.addEventListener('change', updateTotal);
+
+    document.getElementById('q-').addEventListener('click', function() {
+        if (parseInt(qtyInput.value) > 1) {
+            qtyInput.value = parseInt(qtyInput.value) - 1;
+            updateTotal();
         }
+    });
+
+    document.getElementById('q+').addEventListener('click', function() {
+        qtyInput.value = parseInt(qtyInput.value) + 1;
+        updateTotal();
     });
 });
