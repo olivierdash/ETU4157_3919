@@ -3,27 +3,23 @@
         <div class="col-md-12">
             <h1>Comparatif des 3 Modes de Dispatch</h1>
             <p class="text-muted">Comparez comment les ressources seraient distribuées avec chacun des trois modes.</p>
-            
+
             <a href="/dispatch" class="btn btn-secondary mb-3">← Retour</a>
 
-            <?php 
-                $modes = [
-                    'fifo' => 'Mode 1: FIFO (Par Date)',
-                    'quantity' => 'Mode 2: Par Quantité',
-                    'proportionality' => 'Mode 3: Proportionnalité'
-                ];
+            <?php
+            $modes = [
+                'fifo' => 'Mode 1: FIFO (Par Date)',
+                'quantity' => 'Mode 2: Par Quantité',
+                'proportionality' => 'Mode 3: Proportionnalité'
+            ];
             ?>
 
             <!-- Navigation par onglets -->
             <ul class="nav nav-tabs nav-fill" role="tablist">
                 <?php foreach ($modes as $key => $label): ?>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link <?php echo $key === 'fifo' ? 'active' : ''; ?>" 
-                                id="tab-<?php echo $key; ?>" 
-                                data-bs-toggle="tab" 
-                                data-bs-target="#content-<?php echo $key; ?>" 
-                                type="button" 
-                                role="tab">
+                        <button class="nav-link <?php echo $key === 'fifo' ? 'active' : ''; ?>" id="tab-<?php echo $key; ?>"
+                            data-bs-toggle="tab" data-bs-target="#content-<?php echo $key; ?>" type="button" role="tab">
                             <?php echo htmlspecialchars($label); ?>
                         </button>
                     </li>
@@ -33,10 +29,9 @@
             <!-- Contenu des onglets -->
             <div class="tab-content mt-3">
                 <?php foreach ($modes as $key => $label): ?>
-                    <div class="tab-pane <?php echo $key === 'fifo' ? 'active' : ''; ?>" 
-                         id="content-<?php echo $key; ?>" 
-                         role="tabpanel">
-                        
+                    <div class="tab-pane <?php echo $key === 'fifo' ? 'active' : ''; ?>" id="content-<?php echo $key; ?>"
+                        role="tabpanel">
+
                         <div class="table-responsive mt-3">
                             <table class="table table-striped table-sm">
                                 <thead class="table-dark">
@@ -54,16 +49,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php 
+                                    <?php
                                     $total_demande = 0;
                                     $total_allouee = 0;
-                                    
-                                    foreach ($comparatif[$key] as $result): 
+
+                                    foreach ($comparatif[$key] as $result):
                                         $total_demande += $result['quantite_demandee'];
                                         $total_allouee += $result['quantite_allouee'];
-                                        $taux = $result['quantite_demandee'] > 0 ? 
+                                        $taux = $result['quantite_demandee'] > 0 ?
                                             round(($result['quantite_allouee'] / $result['quantite_demandee']) * 100, 1) : 0;
-                                    ?>
+                                        ?>
                                         <tr>
                                             <td><?php echo htmlspecialchars(substr($result['ressource_nom'], 0, 20)); ?></td>
                                             <td>
@@ -91,8 +86,8 @@
                                                 </td>
                                             <?php endif; ?>
                                             <td class="text-center">
-                                                <?php 
-                                                    $color = $taux >= 100 ? 'bg-success' : ($taux >= 50 ? 'bg-warning text-dark' : 'bg-danger');
+                                                <?php
+                                                $color = $taux >= 100 ? 'bg-success' : ($taux >= 50 ? 'bg-warning text-dark' : 'bg-danger');
                                                 ?>
                                                 <span class="badge <?php echo $color; ?>">
                                                     <?php echo $taux; ?>%
@@ -118,9 +113,9 @@
                                             <th></th>
                                         <?php endif; ?>
                                         <th class="text-center">
-                                            <?php 
-                                                $taux_total = $total_demande > 0 ? 
-                                                    round(($total_allouee / $total_demande) * 100, 1) : 0;
+                                            <?php
+                                            $taux_total = $total_demande > 0 ?
+                                                round(($total_allouee / $total_demande) * 100, 1) : 0;
                                             ?>
                                             <span class="badge bg-info">
                                                 <?php echo $taux_total; ?>%
@@ -153,10 +148,10 @@
                                     <div class="card-body">
                                         <h6 class="card-title">Taux de Satisfaction</h6>
                                         <h3>
-                                            <?php 
-                                                $taux_total = $total_demande > 0 ? 
-                                                    round(($total_allouee / $total_demande) * 100, 1) : 0;
-                                                echo $taux_total;
+                                            <?php
+                                            $taux_total = $total_demande > 0 ?
+                                                round(($total_allouee / $total_demande) * 100, 1) : 0;
+                                            echo $taux_total;
                                             ?>%
                                         </h3>
                                     </div>
@@ -245,7 +240,7 @@
 
 <style>
     .card {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 1rem;
     }
 
