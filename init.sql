@@ -42,6 +42,14 @@ CREATE TABLE dons(
     FOREIGN KEY (id_ressource) REFERENCES ressources(id)
 );
 
+CREATE TABLE mouvement (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_don INT NOT NULL,
+    type_action ENUM('AJOUT', 'ANNULATION', 'MODIFICATION') NOT NULL,
+    quantite_mouvement INT NOT NULL,
+    date_mouvement DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_don) REFERENCES dons(id) ON DELETE CASCADE
+);
 -- ============================================================
 -- VUES CORRIGÉES
 -- ============================================================
