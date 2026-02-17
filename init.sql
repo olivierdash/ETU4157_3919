@@ -20,6 +20,8 @@ CREATE TABLE ressources(
     prixUnitaire DECIMAL(10, 2) NOT NULL
 );
 
+CREATE TABLE 
+
 CREATE TABLE dons(
     id INT AUTO_INCREMENT PRIMARY KEY,
     quantite INT NOT NULL,
@@ -33,6 +35,9 @@ FROM ressources r
 JOIN type t ON r.type_id = t.id
 JOIN ville v ON v.id = r.ville_id
 JOIN dons d ON d.id_ressource = r.id;
+
+CREATE OR REPLACE view v_dons_lib_comple as
+SELECT r.nom, v.nom, date_don
 
 INSERT INTO type (nom) VALUES 
 ('nature'),
