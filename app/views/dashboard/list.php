@@ -74,6 +74,4 @@
         </main>
 
     <!-- Script pour le menu mobile -->
-    <script nonce="<?= Flight::get('csp_nonce') ?>" src="<?= BASE_URL ?>/assets/js/dashboard.js">
-       
-    </script>
+ 

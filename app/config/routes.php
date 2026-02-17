@@ -20,7 +20,8 @@ $router->group('', function(Router $router) use ($app) {
         $ressource_lib = RessourceController::getAllWithRessourcesLib();
         $count_ville = VilleController::getCountVille();
         $countDons = DonsController::countDons();
-        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib, 'count_ville' => $count_ville, 'countDons' => $countDons]);
+        $app->render('dashboard/list', ['ressource_lib' => $ressource_lib, 'count_ville' => $count_ville, 'countDons' => $countDons], 'content');
+        $app->render('modal');
     });    
 
     $router->group('/collectes', function(Router $router) use ($app){

@@ -84,5 +84,8 @@
 <main class="container" style="margin-left: 280px;">
     <?= $content ?>
 </main>
+<script nonce="<?= Flight::get('csp_nonce') ?>" src="<?= BASE_URL ?>/assets/js/dashboard.js">
+       
+       </script>
 </body>
 </html>
