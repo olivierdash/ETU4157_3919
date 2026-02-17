@@ -1,46 +1,19 @@
 <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/dashboard.css">
-<?php
-/**
- * TABLEAU DE BORD DES SINISTRÉS
- * Vue pour FlightPHP - Tableau par ville
- */
-
-$totalSinistres = 156;
-$totalVilles = count($ressource_lib);
-$totalMontant = 0;
-$totalDons = 0;
-
-foreach ($ressource_lib as $villeData) {
-    $totalMontant += $villeData['total_montant'] ?? 0;
-    $totalDons += count($villeData['besoins'] ?? []);
-}
-?>
-
-<header class="header">
-    <div class="header-content">
-        <h1>Tableau de Bord des Sinistrés</h1>
-        <p>Suivi des besoins et distribution des dons</p>
-    </div>
-    <div class="stats-grid">
-        <div class="stat">
-            <div class="stat-value"><?= $totalSinistres ?></div>
-            <div class="stat-label">Sinistrés</div>
-        </div>
-        <div class="stat">
-            <div class="stat-value"><?= $totalVilles ?></div>
-            <div class="stat-label">Villes</div>
-        </div>
-        <div class="stat">
-            <div class="stat-value"><?= $totalDons ?></div>
-            <div class="stat-label">Dons</div>
-        </div>
-        <div class="stat">
-            <div class="stat-value">€<?= number_format($totalMontant, 0) ?></div>
-            <div class="stat-label">Montant Total</div>
-        </div>
-    </div>
-</header>
-
+<header class="main-header">
+            <h1>Tableau de Bord des Sinistrés</h1>
+            <p>Suivi des besoins et distribution des dons - Février 2026</p>
+            <!-- Stats rapides -->
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-value"><?= $count_ville ?></span>
+                    <span class="stat-label">Villes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value"><?= $countDons ?></span>
+                    <span class="stat-label">Dons</span>
+                </div>
+            </div>
+        </header>
 <div class="dashboard-container">
     <div class="dashboard-toolbar">
         <input 
