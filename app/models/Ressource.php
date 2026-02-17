@@ -35,11 +35,18 @@ class Ressource extends Entity
         return $result;
     }
 
-    public function getByVille($villeId)
+    public function getByVille($villeId, $typeId = null)
     {
         $sql = "SELECT * FROM Ressources WHERE ville_id = ?";
+        if( $typeId !== null) {
+            $sql .= " AND type_id = ?";
+        }
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$villeId]);
+        if( $typeId !== null) {
+            $stmt->execute([$villeId, $typeId]);
+        } else {
+            $stmt->execute([$villeId]);
+        }
         $result = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $result[] = new Ressource($row);

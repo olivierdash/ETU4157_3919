@@ -24,11 +24,11 @@ $router->group('', function(Router $router) use ($app) {
     });    
 
     $router->group('/collectes', function(Router $router) use ($app){
-        $router->get('', function() use ($app) {
-            $app->render('collect/form');
-        });
+        $router->get('', [DonsController::class, 'renderFormDon']);
 
         $router->post('/insert', [DonsController::class, 'insert']);
     });
+
+    $router->get('/ressource/get', [RessourceController::class, 'getRessourcesByVilleId']);
 
 }, [SecurityHeadersMiddleware::class]);
