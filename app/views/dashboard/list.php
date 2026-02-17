@@ -2,14 +2,6 @@
 <header class="main-header">
             <h1>Tableau de Bord des Sinistrés</h1>
             <p>Suivi des besoins et distribution des dons - Février 2026</p>
-            
-            <!-- Boutons d'action -->
-            <div class="header-actions">
-                <a href="/dispatch" class="btn btn-dispatch">
-                    📦 Dispatcher les Ressources
-                </a>
-            </div>
-            
             <!-- Stats rapides -->
             <div class="header-stats">
                 <div class="stat-item">
@@ -80,6 +72,3 @@
                 <?php endforeach; ?>
             </div>
         </main>
-
-    <!-- Script pour le menu mobile -->
- 

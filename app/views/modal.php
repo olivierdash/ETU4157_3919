@@ -74,8 +74,8 @@
                     <li class="nav-item">
                         <div class="btn"
                             style="background-color: greenyellow; color: black; border-radius: 5px; padding: 5px 10px;">
-                            <a href="<?= BASE_URL ?>/simulation" class="nav-link">
-                                <span class="nav-icon">⚙️</span>
+                            <a href="<?= BASE_URL ?>/dispatch" class="nav-link">
+                                <span class="nav-icon">📦</span>
                                 <span>Simulation</span>
                             </a>
                         </div>

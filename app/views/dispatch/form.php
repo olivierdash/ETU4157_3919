@@ -1,111 +1,99 @@
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Simulation de Dispatch de Ressources</h1>
-            <p class="lead">Choisissez un mode de dispatch pour voir comment les ressources seraient distribuées aux villes.</p>
-            
-            <a href="/" class="btn btn-secondary mb-3">← Retour</a>
-
-            <!-- Contrôles -->
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="dispatchMode" class="form-label"><strong>Sélectionnez le mode de dispatch :</strong></label>
-                            <select id="dispatchMode" class="form-select form-select-lg">
-                                <option value="">-- Choisir un mode --</option>
-                                <option value="fifo">Mode 1: FIFO (Par Date)</option>
-                                <option value="quantity">Mode 2: Par Quantité</option>
-                                <option value="proportionality">Mode 3: Proportionnalité</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <div id="modeDescription" class="alert alert-info mt-5" style="display:none;">
-                                <strong id="descTitle"></strong>
-                                <p id="descText" class="mb-1"></p>
-                                <div id="descDetails"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bouton Valider -->
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <button id="validateBtn" class="btn btn-primary btn-lg w-100" style="display:none;">
-                                Valider et Voir les Résultats
-                            </button>
-                        </div>
-                    </div>
+<div class="dispatch-page">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dispatch-header">
+                    <h1>⚡ Simulation de Dispatch de Ressources</h1>
+                    <p>Choisissez un mode de dispatch pour voir comment les ressources seraient distribuées aux villes.</p>
                 </div>
-            </div>
+                
+                <a href="/" class="btn btn-secondary mb-3">← Retour</a>
 
-            <!-- Indicateur de chargement -->
-            <div id="loadingSpinner" class="text-center mb-4" style="display:none;">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Chargement...</span>
-                </div>
-                <p class="mt-2">Chargement des données...</p>
-            </div>
+                <!-- Contrôles -->
+                <div class="card dispatch-control">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="dispatchMode" class="form-label"><strong>Sélectionnez le mode de dispatch :</strong></label>
+                                <select id="dispatchMode" class="form-select form-select-lg">
+                                    <option value="">-- Choisir un mode --</option>
+                                    <option value="fifo">Mode 1: FIFO (Par Date) - Premier arrivé, premier servi</option>
+                                    <option value="quantity">Mode 2: Par Quantité - Les demandes les plus petites en premier</option>
+                                    <option value="proportionality">Mode 3: Proportionnalité - Distribution proportionnelle aux demandes</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="modeDescription" class="alert alert-info mt-5" style="display:none;">
+                                    <strong id="descTitle"></strong>
+                                    <p id="descText" class="mb-1"></p>
+                                    <div id="descDetails"></div>
+                                </div>
+                            </div>
+                        </div>
 
-            <!-- Résultats -->
-            <div id="resultsContainer" style="display:none;">
-                <!-- Statistiques -->
-                <div class="row mb-4">
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h6 class="card-title">Total Demandé</h6>
-                                <h3 id="totalDemanded" class="text-warning">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h6 class="card-title">Total Alloué</h6>
-                                <h3 id="totalAllocated" class="text-success">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h6 class="card-title">Taux de Satisfaction</h6>
-                                <h3 id="satisfactionRate" class="text-info">0%</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-center">
-                            <div class="card-body">
-                                <h6 class="card-title">Nombre de Demandes</h6>
-                                <h3 id="requestCount" class="text-primary">0</h3>
+                        <!-- Bouton Valider -->
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <button id="validateBtn" class="btn btn-primary btn-lg w-100" style="display:none;">
+                                    ✓ Valider et Voir les Résultats
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tableau -->
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Ressource</th>
-                                <th>Type</th>
-                                <th>Ville Demandeuse</th>
-                                <th class="text-center">Date Demande</th>
-                                <th class="text-center">Quantité Demandée</th>
-                                <th class="text-center">Quantité Allouée</th>
-                                <th id="proportionHeader" class="text-center" style="display:none;">Proportion</th>
-                                <th class="text-center">Taux Satisfaction</th>
-                            </tr>
-                        </thead>
-                        <tbody id="resultsTableBody">
-                            <tr id="emptyRow">
-                                <td colspan="8" class="text-center text-muted">Aucune donnée</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Indicateur de chargement -->
+                <div id="loadingSpinner" class="text-center mb-4" style="display:none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Chargement...</span>
+                    </div>
+                    <p class="mt-2">Chargement des données...</p>
+                </div>
+
+                <!-- Résultats -->
+                <div id="resultsContainer" style="display:none;">
+                    <!-- Statistiques -->
+                    <div class="dispatch-stats">
+                        <div class="stat-card">
+                            <h6>Total Demandé</h6>
+                            <h3 id="totalDemanded">0</h3>
+                        </div>
+                        <div class="stat-card">
+                            <h6>Total Alloué</h6>
+                            <h3 id="totalAllocated">0</h3>
+                        </div>
+                        <div class="stat-card">
+                            <h6>Taux de Satisfaction</h6>
+                            <h3 id="satisfactionRate">0%</h3>
+                        </div>
+                        <div class="stat-card">
+                            <h6>Nombre de Demandes</h6>
+                            <h3 id="requestCount">0</h3>
+                        </div>
+                    </div>
+
+                    <!-- Tableau -->
+                    <div class="table-responsive dispatch-table-wrapper">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Ressource</th>
+                                    <th>Type</th>
+                                    <th>Ville Demandeuse</th>
+                                    <th class="text-center">Date Demande</th>
+                                    <th class="text-center">Quantité Demandée</th>
+                                    <th class="text-center">Quantité Allouée</th>
+                                    <th id="proportionHeader" class="text-center" style="display:none;">Proportion</th>
+                                    <th class="text-center">Taux Satisfaction</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTableBody">
+                                <tr id="emptyRow">
+                                    <td colspan="8" class="text-center text-muted">Aucune donnée</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -289,40 +277,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-    .form-select-lg {
-        font-size: 1rem;
-        padding: 0.75rem 1rem;
-    }
 
-    .btn-lg {
-        font-size: 1.1rem;
-        padding: 0.75rem 1.5rem;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(0,123,255,0.1);
-    }
-
-    .badge {
-        font-size: 0.9rem;
-        padding: 0.4rem 0.6rem;
-    }
-
-    .spinner-border {
-        width: 3rem;
-        height: 3rem;
-    }
-
-    .card {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        transition: transform 0.2s;
-    }
-
-    .card:hover {
-        transform: translateY(-3px);
-    }
-
-    #modeDescription {
-        border-left: 4px solid #0d6efd;
-    }
-</style>
