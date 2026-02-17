@@ -55,7 +55,7 @@ INSERT INTO ressources (nom, ville_id, type_id, prixUnitaire) VALUES
 ('Lot de Conserves', 1, 1, 2.50),  -- Nature (Paris)
 ('Sac de Ciment 25kg', 2, 2, 8.50), -- Materiaux (Lyon)
 ('Don numéraire', 3, 3, 1.00),      -- Argent (Marseille)
-('Briques (palette)', 2, 2, 120.00),-- Materiaux (Lyon)
+('Briques (palette)', 2, 2, 120.00),-- Materiaux (Lyon)x
 ('Farine (vrac)', 1, 1, 1.20);      -- Nature (Paris)
 -- Dons de test
 INSERT INTO dons (quantite, id_ressource, date_don, dons_argent) VALUES 
