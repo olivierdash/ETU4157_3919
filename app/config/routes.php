@@ -6,6 +6,7 @@ use flight\net\Router;
 use app\controllers\VilleController;
 use app\controllers\RessourceController;
 use app\controllers\DonsController;
+use app\controllers\DispatchController;
 use flight\net\Route;
 
 /** 
@@ -43,6 +44,18 @@ $router->group('', function(Router $router) use ($app) {
             $app->render('besoins/recap', [], 'content');
             $app->render('modal');
         });
+    });
+
+    $router->group('/dispatch', function(Router $router) use ($app){
+        $router->get('', [DispatchController::class, 'showDispatchForm']);
+        
+        $router->get('/results', [DispatchController::class, 'showDispatch']);
+        
+        $router->get('/api', [DispatchController::class, 'getDispatch']);
+        
+        $router->get('/comparative', [DispatchController::class, 'showComparative']);
+        
+        $router->get('/api/comparative', [DispatchController::class, 'getComparative']);
     });
 
 }, [SecurityHeadersMiddleware::class]);
