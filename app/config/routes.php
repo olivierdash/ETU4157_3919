@@ -25,6 +25,12 @@ $router->group('', function(Router $router) use ($app) {
         $app->render('modal');
     });    
 
+    $router->group('/dashboard', function(Router $router) use ($app){
+        $router->get('', function() use ($app){
+            $app->redirect('/');
+        });
+    });
+
     $router->group('/collectes', function(Router $router) use ($app){
         $router->get('', [DonsController::class, 'renderFormDon']);
 
