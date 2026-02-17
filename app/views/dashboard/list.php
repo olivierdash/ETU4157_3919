@@ -55,6 +55,12 @@
                             <span>Dons</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="<?= BASE_URL ?>/collectes" class="nav-link">
+                            <span class="nav-icon">🎁</span>
+                            <span>Saisie de collectes</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 

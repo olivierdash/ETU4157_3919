@@ -27,6 +27,17 @@
         public function getDate(){
             return $this->date;
         }
+
+        public function insert(){
+            $data = Flight::request()->data->getData();
+            $sql = "INSERT INTO dons (quantite, date, id_ressource) VALUES (:quantite, :date, :ressource_id)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':quantite', $data['quantite'], PDO::PARAM_INT);
+            $stmt->bindParam(':date', $data['date']);
+            $stmt->bindParam(':ressource_id', $data['ressource_id'], PDO::PARAM_INT);
+            $stmt->execute();
+            Flight::render('collect/form', ['success' => true]);
+        }
     }
     
 ?>

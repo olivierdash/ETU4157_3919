@@ -6,6 +6,8 @@ use flight\net\Router;
 use app\controllers\VilleController;
 use app\controllers\RessourceController;
 use app\controllers\DonsController;
+use flight\net\Route;
+
 /** 
  * @var Router $router 
  * @var Engine $app
@@ -20,8 +22,12 @@ $router->group('', function(Router $router) use ($app) {
         $app->render('dashboard/list', ['ressource_lib' => $ressource_lib, 'count_ville' => $count_ville]);
     });    
 
-    $router->get('/collectes', function() use ($app){
-        $app->render('collect/form');
+    $router->group('/collectes', function(Router $router) use ($app){
+        $router->get('', function() use ($app) {
+            $app->render('collect/form');
+        });
+
+        $router->post('/insert', [DonsController::class, 'insert']);
     });
 
 }, [SecurityHeadersMiddleware::class]);
